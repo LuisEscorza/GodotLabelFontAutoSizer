@@ -15,9 +15,9 @@ func _ready() -> void:
 
 
 func _on_child_entered_tree(node: Node) -> void:
-	print("Node entered tree")
 	if node is Label or node is RichTextLabel:
-		print("Node entered is Label")
+		node.tree_exiting.connect(_on_label_exiting_tree.bind(node))
+		node.script_changed.connect(_on_label_script_changed.bind(node))
 
 
 func _on_scene_changed(root: Node) -> void:
@@ -37,9 +37,22 @@ func _check_nodes_in_scene() -> void:
 	nodes_to_check.append(_current_root)
 	while nodes_to_check.size() > 0:
 		var current_node: Node = nodes_to_check.pop_front()
-		print("Node found: " + str(current_node))
 		if current_node is Label or current_node is RichTextLabel:
-			print("Node found is Label")
+			current_node.tree_exiting.connect(_on_label_exiting_tree.bind(current_node))
+			current_node.script_changed.connect(_on_label_script_changed.bind(current_node))
 		if current_node.get_child_count() > 0:
 			for child_node in current_node.get_children():
 				nodes_to_check.append(child_node)
+
+
+func _on_label_exiting_tree(label: Node) -> void:
+	label.tree_exiting.disconnect(_on_label_exiting_tree.bind(label))
+	label.script_changed.disconnect(_on_label_script_changed.bind(label))
+
+
+func _on_label_script_changed(label: Node):
+	var script: Script = label.get_script()
+	if script == null:
+		return
+	elif script.resource_path.ends_with("label_auto_sizer.gd"):
+		print("Label has now the auto sizer")

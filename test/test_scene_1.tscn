@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cqk1bel28xqov"]
+[gd_scene load_steps=3 format=3 uid="uid://cqk1bel28xqov"]
 
 [ext_resource type="Theme" uid="uid://cifdhwluyikjx" path="res://test/test_label_theme.tres" id="1_ehhpe"]
+[ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="2_scjuk"]
 
 [node name="TestScene1" type="Control"]
 layout_mode = 3
@@ -42,3 +43,4 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ehhpe")
 text = "Label with script"
+script = ExtResource("2_scjuk")
