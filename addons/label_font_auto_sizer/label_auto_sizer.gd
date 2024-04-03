@@ -8,7 +8,6 @@ class_name LabelAutoSizer
 @onready var _base_font_size: Variant = null
 @onready var _overriden_font_size: Variant = get("theme_override_font_sizes/font_size")
 
-
 func set_label_defaults() -> void:
 	clip_text = true
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -35,13 +34,14 @@ func check_size() -> void:
 	if get_line_count() > get_visible_line_count():
 		_overriden_font_size = _base_font_size
 		set("theme_override_font_sizes/font_size", _overriden_font_size)
-		_resize()
-	else:
-		if _print_debug_enabled:
-			print(str(name) + " Didn't need resizing.")
+		_shrink_size()
+	elif get_line_count() == get_visible_line_count():
+		if _overriden_font_size != null and _overriden_font_size < _base_font_size:
+			_enlarge_size()
 
 
-func _resize() -> void:
+
+func _shrink_size() -> void:
 	var _minimum_size: int = _base_font_size - (_decrease_per_step * _max_steps)
 	var new_size: int
 	while get_line_count() > get_visible_line_count():
@@ -58,6 +58,20 @@ func _resize() -> void:
 	if _print_debug_enabled:
 		print(str(name) + " Finished resizing.")
 		print(str(name) + " Override size: " + str(_overriden_font_size) + "px.")
+
+
+func _enlarge_size() -> void:
+	if _overriden_font_size == _base_font_size:
+		return
+	var new_size: int = _overriden_font_size + _decrease_per_step
+	if new_size < _base_font_size:
+		_overriden_font_size = new_size
+		set("theme_override_font_sizes/font_size", new_size)
+		check_size()
+	elif new_size == _base_font_size:
+		remove_theme_font_size_override("font_size")
+		if get_line_count() > get_visible_line_count():
+			_shrink_size()
 
 
 func set_label_text(new_text: String) -> void:
