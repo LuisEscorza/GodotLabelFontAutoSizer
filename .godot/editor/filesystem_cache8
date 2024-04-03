@@ -1,0 +1,29 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1712158914
+demo_label_settings.tres::LabelSettings::3166741484251691085::1712001725::0::1::::<><>::uid://hck3x7ql7t8f::::res://demo_scene/good timing bd.otf
+sinlabelsetings.gd::GDScript::-1::1711984723::0::1::::TESTTESTTEST<>Label<>::
+::res://addons/::1712158846
+::res://addons/label_font_auto_sizer/::1712158846
+label_auto_sizer.gd::GDScript::-1::1712001861::0::1::::LabelAutoSizer<>Label<>::
+label_font_auto_size_manager.gd::GDScript::-1::1711994188::0::1::::LabelFontAutoSizeManager<>Node<>::
+OLD_PLUGIN.gd::GDScript::-1::1711846060::0::1::::<>EditorPlugin<>::
+plugin.cfg::TextFile::-1::1711604774::0::1::::<><>::
+plugin.gd::GDScript::-1::1711877568::0::1::::<>EditorPlugin<>::
+rich_label_auto_sizer.gd::GDScript::-1::1711851080::0::1::::RichLabelAutoSizer<>RichTextLabel<>::
+::res://demo_scene/::1712158846
+add_text_button.gd::GDScript::-1::1712001944::0::1::::<>TextureButton<>::
+blue.png::CompressedTexture2D::7920230650111562660::1710869686::1711604974::1::::<><>::
+button_hover.png::CompressedTexture2D::8881540193007503470::1710869490::1711604974::1::::<><>::
+button_normal.png::CompressedTexture2D::1200306776462359869::1710869490::1711604974::1::::<><>::
+button_pressed.png::CompressedTexture2D::5516221776826098425::1710869490::1711604974::1::::<><>::
+good timing bd.otf::FontFile::496109091345089891::1710869784::1711604974::1::::<><>::
+icon.svg::CompressedTexture2D::2372036283792408413::1710868638::1711604974::1::::<><>::
+in_editor_demo.tscn::PackedScene::4413664210610046176::1712002708::0::1::::<><>::uid://dk3vboe5ui7v1::::res://demo_scene/blue.png<>uid://hck3x7ql7t8f::::res://demo_scene/good timing bd.otf<>res://addons/label_font_auto_sizer/label_auto_sizer.gd
+menu_buttons.tres::Theme::9019512112883216830::1712001725::0::1::::<><>::uid://hck3x7ql7t8f::::res://demo_scene/good timing bd.otf
+play_scene_demo.tscn::PackedScene::8517673347079857985::1712002579::0::1::::<><>::uid://dk3vboe5ui7v1::::res://demo_scene/blue.png<>uid://d1rebua0vdnhu::::res://demo_scene/menu_buttons.tres<>uid://rdo43ddflri8::::res://demo_scene/button_normal.png<>uid://ckudmp7efun0d::::res://demo_scene/button_pressed.png<>uid://dysjw015wkpjq::::res://demo_scene/button_hover.png<>res://addons/label_font_auto_sizer/label_auto_sizer.gd<>uid://cp5dsycuv1l2t::::res://demo_scene/wide_button_normal.png<>uid://d0gsahgs3pki::::res://demo_scene/wide_button_pressed.png<>uid://06fmkf1jbiam::::res://demo_scene/wide_button_hover.png<>res://demo_scene/add_text_button.gd
+wide_button_hover.png::CompressedTexture2D::1819042349968273860::1710870702::1711604974::1::::<><>::
+wide_button_normal.png::CompressedTexture2D::5887820914434888053::1710870702::1711604974::1::::<><>::
+wide_button_pressed.png::CompressedTexture2D::262572432123894168::1710870702::1711604974::1::::<><>::
+::res://TEST/::1712158846
+TestScene1.tscn::PackedScene::4948242974681863004::1711954556::0::1::::<><>::res://addons/label_font_auto_sizer/label_auto_sizer.gd<>uid://d1rebua0vdnhu::::res://demo_scene/menu_buttons.tres
+TestScene2.tscn::PackedScene::4754519121650923415::1711878630::0::1::::<><>::
