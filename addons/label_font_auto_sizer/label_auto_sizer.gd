@@ -2,7 +2,6 @@
 extends Label
 class_name LabelAutoSizer
 
-@export var _max_line_amount: int = -1
 @export var _decrease_per_step: int = 1
 @export var _max_steps: int = 1
 @export var _print_debug_enabled: bool = false
@@ -13,7 +12,6 @@ class_name LabelAutoSizer
 func set_label_defaults() -> void:
 	clip_text = true
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	max_lines_visible = _max_line_amount
 
 
 func _ready() -> void:
@@ -33,10 +31,8 @@ func _ready() -> void:
 
 
 func check_size() -> void:
-	if _max_line_amount == -1:
-		return
 	await get_tree().process_frame
-	if get_line_count() > _max_line_amount:
+	if get_line_count() > get_visible_line_count():
 		_overriden_font_size = _base_font_size
 		set("theme_override_font_sizes/font_size", _overriden_font_size)
 		_resize()
@@ -48,7 +44,7 @@ func check_size() -> void:
 func _resize() -> void:
 	var _minimum_size: int = _base_font_size - (_decrease_per_step * _max_steps)
 	var new_size: int
-	while get_line_count() > _max_line_amount:
+	while get_line_count() > get_visible_line_count():
 		new_size = _overriden_font_size - _decrease_per_step
 		if new_size >= _minimum_size:
 			_overriden_font_size = new_size

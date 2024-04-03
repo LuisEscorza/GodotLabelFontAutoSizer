@@ -47,6 +47,7 @@ text = "Label with script"
 autowrap_mode = 3
 clip_text = true
 script = ExtResource("2_gpa0a")
+_max_line_amount = -1
 
 [node name="Button" type="Button" parent="." node_paths=PackedStringArray("_labels")]
 layout_mode = 0
