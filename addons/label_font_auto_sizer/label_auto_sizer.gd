@@ -26,10 +26,10 @@ func _ready() -> void:
 		
 	if _print_debug_enabled:
 		print(str(name) + " Base font size: " + str(_base_font_size) + "px.")
-	check_size()
+	_check_line_count()
 
 
-func check_size() -> void:
+func _check_line_count() -> void:
 	await get_tree().process_frame
 	if get_line_count() > get_visible_line_count():
 		_overriden_font_size = _base_font_size
@@ -67,7 +67,7 @@ func _enlarge_size() -> void:
 	if new_size < _base_font_size:
 		_overriden_font_size = new_size
 		set("theme_override_font_sizes/font_size", new_size)
-		check_size()
+		_check_line_count()
 	elif new_size == _base_font_size:
 		remove_theme_font_size_override("font_size")
 		if get_line_count() > get_visible_line_count():
@@ -76,4 +76,4 @@ func _enlarge_size() -> void:
 
 func set_label_text(new_text: String) -> void:
 	text = new_text
-	check_size()
+	_check_line_count()
