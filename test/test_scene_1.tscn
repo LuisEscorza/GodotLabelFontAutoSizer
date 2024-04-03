@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqk1bel28xqov"]
+[gd_scene load_steps=4 format=3 uid="uid://cqk1bel28xqov"]
 
 [ext_resource type="Theme" uid="uid://cifdhwluyikjx" path="res://test/test_label_theme.tres" id="1_ehhpe"]
-[ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="2_scjuk"]
+[ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="2_gpa0a"]
+[ext_resource type="Script" path="res://test/add_numbers_button.gd" id="3_lrqdc"]
 
 [node name="TestScene1" type="Control"]
 layout_mode = 3
@@ -43,4 +44,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ehhpe")
 text = "Label with script"
-script = ExtResource("2_scjuk")
+autowrap_mode = 3
+clip_text = true
+script = ExtResource("2_gpa0a")
+
+[node name="Button" type="Button" parent="." node_paths=PackedStringArray("_labels")]
+layout_mode = 0
+offset_left = 495.0
+offset_top = 500.0
+offset_right = 798.0
+offset_bottom = 630.0
+theme_override_font_sizes/font_size = 32
+text = "ADD NUMBERS"
+script = ExtResource("3_lrqdc")
+_labels = [NodePath("../LabelWithScript")]
+
+[connection signal="pressed" from="Button" to="Button" method="_on_button_clicked"]

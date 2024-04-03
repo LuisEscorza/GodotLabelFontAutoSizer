@@ -11,9 +11,8 @@ config_version=5
 [application]
 
 config/name="FontAutoSizeProject"
-run/main_scene="res://demo_scene/play_scene_demo.tscn"
+run/main_scene="res://test/test_scene_1.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://demo_scene/icon.svg"
 
 [debug]
 
