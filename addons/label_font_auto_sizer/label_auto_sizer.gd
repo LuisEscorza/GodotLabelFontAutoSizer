@@ -74,6 +74,15 @@ func _enlarge_size() -> void:
 			_shrink_size()
 
 
-func set_label_text(new_text: String) -> void:
+func _set(property: StringName, value: Variant) -> bool:
+	match property:
+		"text":
+			text = value
+			_check_line_count()
+			return true
+		_: return false
+
+
+func set_text(new_text: String) -> void:
 	text = new_text
 	_check_line_count()

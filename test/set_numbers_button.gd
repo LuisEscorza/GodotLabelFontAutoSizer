@@ -19,5 +19,4 @@ func update_labels() -> void:
 		label.text = ""
 		for num in added_numbers:
 			label.text += str(num) + " "
-		if label.has_method("check_size"):
-			label.check_size()
+
