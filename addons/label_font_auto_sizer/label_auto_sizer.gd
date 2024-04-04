@@ -29,14 +29,12 @@ func _ready() -> void:
 		push_error("Base font size not found")
 	
 	_current_font_size = _base_font_size
-	if _print_debug_enabled:
-		print(str(name) + " Base font size: " + str(_base_font_size) + "px.")
+	_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 	call_deferred("_check_line_count")
 
 
 func _check_line_count() -> void:
-	if _print_debug_enabled:
-		print("Checking lines of " + str(name))
+	_print_debug_message("Checking lines of " + str(name))
 	if get_line_count() > get_visible_line_count() and _current_font_size > max(_base_font_size - (_size_per_step * _max_steps), 1):
 		_shrink_font()
 		return
@@ -47,24 +45,20 @@ func _check_line_count() -> void:
 
 
 func _shrink_font():
-	if _print_debug_enabled:
-		print(str(name) + "' shrink method called")
+	_print_debug_message(str(name) + "' shrink method called")
 	_current_font_size = _current_font_size - _size_per_step
 	set("theme_override_font_sizes/font_size", _current_font_size)
-	if _print_debug_enabled:
-		print(str(name) + " shrunk " + str(_size_per_step) + "px.")
+	_print_debug_message(str(name) + " shrunk " + str(_size_per_step) + "px.")
 	if _last_size_state == LABEL_SIZE_STATE.JUST_ENLARGED:
 		_last_size_state = LABEL_SIZE_STATE.IDLE
-		if _print_debug_enabled:
-			print(str(name) + " finished shrinking. Was just enlarged.")
+		_print_debug_message(str(name) + " finished shrinking. Was just enlarged.")
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_SHRUNK
 		_check_line_count()
 
 
 func _enlarge_font():
-	if _print_debug_enabled:
-		print(str(name) + "' enlarge method called")
+	_print_debug_message(str(name) + "' enlarge method called")
 	_current_font_size = _current_font_size + _size_per_step
 	set("theme_override_font_sizes/font_size", _current_font_size)
 	if _last_size_state == LABEL_SIZE_STATE.JUST_SHRUNK:
@@ -72,8 +66,7 @@ func _enlarge_font():
 			_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
 			_shrink_font()
 		else:
-			if _print_debug_enabled:
-				print(str(name) + " finished enlarging. Was just shrunk.")
+			_print_debug_message(str(name) + " finished enlarging. Was just shrunk.")
 			_last_size_state = LABEL_SIZE_STATE.IDLE
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
@@ -87,6 +80,11 @@ func _set(property: StringName, value: Variant) -> bool:
 			call_deferred("_check_line_count")
 			return true
 		_: return false
+
+
+func _print_debug_message(message: String) -> void:
+	if _print_debug_enabled:
+		print(message)
 
 
 func set_text(new_text: String) -> void:
