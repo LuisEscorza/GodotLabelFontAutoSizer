@@ -12,6 +12,7 @@ var _last_size_state: LABEL_SIZE_STATE = LABEL_SIZE_STATE.IDLE
 enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
 var _current_font_size: int
 
+
 func set_label_defaults() -> void:
 	clip_text = true
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -19,14 +20,12 @@ func set_label_defaults() -> void:
 
 func _ready() -> void:
 	set_label_defaults()
-	#if label_settings != null:
+	#if label_settings != null: ## not yet supported ## TODO
 		#_base_font_size = label_settings.font_size
 	if get("theme_override_font_sizes/font_size") != null:
 		_base_font_size = get("theme_override_font_sizes/font_size")
 	elif get_theme_font_size("font_size") != null:
 		_base_font_size = get_theme_font_size("font_size")
-	else:
-		push_error("Base font size not found")
 	
 	_current_font_size = _base_font_size
 	_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
@@ -46,8 +45,7 @@ func _check_line_count() -> void:
 
 func _shrink_font():
 	_print_debug_message(str(name) + "' shrink method called")
-	_current_font_size = _current_font_size - _size_per_step
-	set("theme_override_font_sizes/font_size", _current_font_size)
+	_override_font_size(_current_font_size - _size_per_step)
 	_print_debug_message(str(name) + " shrunk " + str(_size_per_step) + "px.")
 	if _last_size_state == LABEL_SIZE_STATE.JUST_ENLARGED:
 		_last_size_state = LABEL_SIZE_STATE.IDLE
@@ -59,8 +57,7 @@ func _shrink_font():
 
 func _enlarge_font():
 	_print_debug_message(str(name) + "' enlarge method called")
-	_current_font_size = _current_font_size + _size_per_step
-	set("theme_override_font_sizes/font_size", _current_font_size)
+	_override_font_size(_current_font_size + _size_per_step)
 	if _last_size_state == LABEL_SIZE_STATE.JUST_SHRUNK:
 		if  get_line_count() > get_visible_line_count():
 			_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
@@ -80,6 +77,12 @@ func _set(property: StringName, value: Variant) -> bool:
 			call_deferred("_check_line_count")
 			return true
 		_: return false
+
+
+func _override_font_size(new_size: int) -> void:
+	set("theme_override_font_sizes/font_size", new_size)
+	_current_font_size = new_size
+	
 
 
 func _print_debug_message(message: String) -> void:
