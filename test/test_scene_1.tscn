@@ -31,7 +31,6 @@ text = "Label with script"
 autowrap_mode = 3
 clip_text = true
 script = ExtResource("2_gpa0a")
-_decrease_per_step = 2
 _max_steps = 6
 
 [node name="LabelNoScript" type="Label" parent="."]
