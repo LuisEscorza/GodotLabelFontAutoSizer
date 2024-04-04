@@ -2,11 +2,11 @@
 extends Label
 class_name LabelAutoSizer
 
-@export var _size_per_step: int = 1
 @export var _max_steps: int = 1
+@export var _size_per_step: int = 1
 @export var _print_debug_enabled: bool = false
-@onready var _base_font_size: Variant = null
-@onready var _overriden_font_size: Variant = get("theme_override_font_sizes/font_size")
+var _base_font_size: int
+
 
 var _last_size_state: LABEL_SIZE_STATE = LABEL_SIZE_STATE.IDLE
 enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
@@ -16,17 +16,21 @@ var _current_font_size: int
 func set_label_defaults() -> void:
 	clip_text = true
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_set_base_font_size()
 
 
-func _ready() -> void:
-	set_label_defaults()
-	#if label_settings != null: ## not yet supported ## TODO
-		#_base_font_size = label_settings.font_size
-	if get("theme_override_font_sizes/font_size") != null:
+func _set_base_font_size() -> void:
+	if label_settings != null:
+		_base_font_size = label_settings.font_size
+		label_settings = label_settings.duplicate() ## These are not unique by default, so we it gets duplicated to not override every instance.
+	elif get("theme_override_font_sizes/font_size") != null:
 		_base_font_size = get("theme_override_font_sizes/font_size")
 	elif get_theme_font_size("font_size") != null:
 		_base_font_size = get_theme_font_size("font_size")
-	
+
+
+func _ready() -> void:
+	_set_base_font_size() ##placeholder here
 	_current_font_size = _base_font_size
 	_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 	call_deferred("_check_line_count")
@@ -80,9 +84,11 @@ func _set(property: StringName, value: Variant) -> bool:
 
 
 func _override_font_size(new_size: int) -> void:
-	set("theme_override_font_sizes/font_size", new_size)
+	if label_settings != null:
+		label_settings.font_size = new_size
+	else:
+		set("theme_override_font_sizes/font_size", new_size)
 	_current_font_size = new_size
-	
 
 
 func _print_debug_message(message: String) -> void:
@@ -93,3 +99,4 @@ func _print_debug_message(message: String) -> void:
 func set_text(new_text: String) -> void:
 	text = new_text
 	call_deferred("_check_line_count")
+
