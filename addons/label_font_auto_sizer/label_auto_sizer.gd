@@ -46,7 +46,6 @@ func _on_label_settings_changed() -> void:
 		call_deferred("_set_base_font_size")
 
 
-
 func _on_theme_changed() -> void:
 	_print_debug_message(str(name) + "' Theme changed.")
 	if _size_just_modified_by_autosizer:
@@ -56,6 +55,10 @@ func _on_theme_changed() -> void:
 			_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 			return
 		call_deferred("_set_base_font_size")
+
+
+func _on_label_rect_resized() -> void:
+	call_deferred("_check_line_count")
 
 
 func _get_property_list():
@@ -156,6 +159,8 @@ func _connect_signals() -> void:
 			label_settings.changed.connect(_on_label_settings_changed)
 	if !theme_changed.is_connected(_on_theme_changed):
 		theme_changed.connect(_on_theme_changed)
+	if !resized.is_connected(_on_label_rect_resized):
+		resized.connect(_on_label_rect_resized)
 
 
 func _print_debug_message(message: String) -> void:
