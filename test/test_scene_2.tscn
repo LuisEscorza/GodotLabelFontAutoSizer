@@ -1,9 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://dm1ajn5egucid"]
 
 [ext_resource type="Theme" uid="uid://cifdhwluyikjx" path="res://test/test_label_theme.tres" id="1_w5612"]
-[ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="2_fnjjs"]
+[ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="2_w5bgu"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_7rs53"]
+[sub_resource type="LabelSettings" id="LabelSettings_lnbmr"]
 font_size = 50
 
 [node name="TestScene1" type="Control"]
@@ -44,10 +44,13 @@ offset_right = -23.0
 offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_w5612")
 text = "Label with script"
-label_settings = SubResource("LabelSettings_7rs53")
+label_settings = SubResource("LabelSettings_lnbmr")
 autowrap_mode = 3
 clip_text = true
-script = ExtResource("2_fnjjs")
-_max_steps = 6
-_size_per_step = 2
+script = ExtResource("2_w5bgu")
+_size_just_modified_by_autosizer = false
+_base_font_size = 50
+_current_font_size = 50
+_last_size_state = 1

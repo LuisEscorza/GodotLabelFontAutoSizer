@@ -33,6 +33,10 @@ clip_text = true
 script = ExtResource("2_gpa0a")
 _max_steps = 6
 _size_per_step = 2
+_size_just_modified_by_autosizer = null
+_base_font_size = 36
+_current_font_size = 36
+_last_size_state = 1
 
 [node name="LabelNoScript" type="Label" parent="."]
 layout_mode = 1

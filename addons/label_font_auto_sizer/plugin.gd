@@ -55,4 +55,4 @@ func _on_label_script_changed(label: Node):
 	if script == null:
 		return
 	elif script.resource_path.ends_with("label_auto_sizer.gd"):
-		label.set_label_defaults()
+		label.set_editor_defaults()
