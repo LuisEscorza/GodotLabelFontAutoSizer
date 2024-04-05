@@ -30,10 +30,10 @@ func _set_base_font_size() -> void:
 	_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 
-
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		_connect_signals()
+	LabelFontAutoSizeManager.register_label(self)
 	_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 	call_deferred("_check_line_count")
 
@@ -57,8 +57,22 @@ func _on_theme_changed() -> void:
 		call_deferred("_set_base_font_size")
 
 
+func _on_font_resouce_changed() -> void:
+	if _size_just_modified_by_autosizer:
+		_size_just_modified_by_autosizer = false
+	else:
+		call_deferred("_set_base_font_size")
+
+
 func _on_label_rect_resized() -> void:
 	call_deferred("_check_line_count")
+
+
+func _on_locale_changed() -> void:
+	call_deferred("_check_line_count")
+
+func _exit_tree() -> void:
+	LabelFontAutoSizeManager.erase_label(self)
 
 
 func _get_property_list():
