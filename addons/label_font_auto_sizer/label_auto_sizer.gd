@@ -38,28 +38,10 @@ func _ready() -> void:
 	call_deferred("_check_line_count")
 
 
-func _on_label_settings_changed() -> void:
-	_print_debug_message(str(name) + "' Label Settings changed.")
-	if _size_just_modified_by_autosizer:
-		_size_just_modified_by_autosizer = false
-	else:
-		call_deferred("_set_base_font_size")
-
-
-func _on_theme_changed() -> void:
-	_print_debug_message(str(name) + "' Theme changed.")
+func _on_font_resource_changed() -> void:
+	_print_debug_message(str(name) + "' Font resource changed.")
 	if _size_just_modified_by_autosizer:
 		_size_just_modified_by_autosizer = false ## Early return because the change wasn't made by the user.
-	else:
-		if label_settings != null: ## Early return because label settings have priority over themes.
-			_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
-			return
-		call_deferred("_set_base_font_size")
-
-
-func _on_font_resouce_changed() -> void:
-	if _size_just_modified_by_autosizer:
-		_size_just_modified_by_autosizer = false
 	else:
 		call_deferred("_set_base_font_size")
 
@@ -70,6 +52,7 @@ func _on_label_rect_resized() -> void:
 
 func _on_locale_changed() -> void:
 	call_deferred("_check_line_count")
+
 
 func _exit_tree() -> void:
 	LabelFontAutoSizeManager.erase_label(self)
@@ -147,8 +130,8 @@ func _set(property: StringName, value: Variant) -> bool:
 					label_settings = value
 					_label_settings_just_duplicated = true
 					label_settings = label_settings.duplicate() ## These are not unique by default, so we it gets duplicated to not override every instance.
-					if !label_settings.changed.is_connected(_on_label_settings_changed):
-						label_settings.changed.connect(_on_label_settings_changed)
+					if !label_settings.changed.is_connected(_on_font_resource_changed):
+						label_settings.changed.connect(_on_font_resource_changed)
 				else:
 					label_settings = null
 				call_deferred("_set_base_font_size")
@@ -168,10 +151,10 @@ func _override_font_size(new_size: int) -> void:
 
 func _connect_signals() -> void:
 	if label_settings != null:
-		if !label_settings.changed.is_connected(_on_label_settings_changed):
-			label_settings.changed.connect(_on_label_settings_changed)
-	if !theme_changed.is_connected(_on_theme_changed):
-		theme_changed.connect(_on_theme_changed)
+		if !label_settings.changed.is_connected(_on_font_resource_changed):
+			label_settings.changed.connect(_on_font_resource_changed)
+	if !theme_changed.is_connected(_on_font_resource_changed):
+		theme_changed.connect(_on_font_resource_changed)
 	if !resized.is_connected(_on_label_rect_resized):
 		resized.connect(_on_label_rect_resized)
 
@@ -186,7 +169,7 @@ func set_editor_defaults() -> void:
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	if label_settings != null:
 		label_settings = label_settings.duplicate() ## These are not unique by default, so we it gets duplicated to not override every instance.
-		label_settings.changed.connect(_on_label_settings_changed)
+		label_settings.changed.connect(_on_font_resource_changed)
 	_set_base_font_size()
 	call_deferred("_set_base_font_size")
 	set_deferred("_current_font_size", _base_font_size)
