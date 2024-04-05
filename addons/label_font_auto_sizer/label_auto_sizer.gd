@@ -150,7 +150,6 @@ func _override_font_size(new_size: int) -> void:
 	else:
 		set("theme_override_font_sizes/font_size", new_size)
 	_current_font_size = new_size
-	_size_just_modified_by_autosizer = false
 
 
 func _connect_signals() -> void:
