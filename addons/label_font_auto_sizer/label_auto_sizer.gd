@@ -2,8 +2,14 @@
 extends Label
 class_name LabelAutoSizer
 
-@export var _max_steps: int = 1
-@export var _size_per_step: int = 1
+@export_range(1,100) var _max_steps: int = 1:
+	set(value):
+		_max_steps = value
+		call_deferred("_check_line_count")
+@export_range(1,100) var _size_per_step: int = 2:
+	set(value):
+		_size_per_step = value
+		call_deferred("_check_line_count")
 @export var _print_debug_enabled: bool = true
 var _base_font_size: int
 var _last_size_state: LABEL_SIZE_STATE = LABEL_SIZE_STATE.IDLE

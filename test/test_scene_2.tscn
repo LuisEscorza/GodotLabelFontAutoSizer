@@ -50,6 +50,7 @@ label_settings = SubResource("LabelSettings_lnbmr")
 autowrap_mode = 3
 clip_text = true
 script = ExtResource("2_w5bgu")
+_max_steps = 4
 _size_just_modified_by_autosizer = false
 _base_font_size = 50
 _current_font_size = 50
