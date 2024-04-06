@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://cxqub0sfewm4v"
-path="res://.godot/imported/Anta-Regular.ttf-23023b717db8c6c522bc24a2b40ec68c.fontdata"
+path="res://.godot/imported/Anta-Regular.ttf-33a1d4b91c58e15249e5e53adb130dc8.fontdata"
 
 [deps]
 
-source_file="res://test/Anta-Regular.ttf"
-dest_files=["res://.godot/imported/Anta-Regular.ttf-23023b717db8c6c522bc24a2b40ec68c.fontdata"]
+source_file="res://demo/Anta-Regular.ttf"
+dest_files=["res://.godot/imported/Anta-Regular.ttf-33a1d4b91c58e15249e5e53adb130dc8.fontdata"]
 
 [params]
 

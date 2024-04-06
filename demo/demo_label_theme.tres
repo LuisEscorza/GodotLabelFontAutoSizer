@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cifdhwluyikjx"]
+
+[ext_resource type="FontFile" uid="uid://cxqub0sfewm4v" path="res://demo/Anta-Regular.ttf" id="1_6bocj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkad4"]
+bg_color = Color(0.027451, 0.0196078, 0.0196078, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.647059, 0.647059, 0.647059, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0.188235, 0.188235, 0.188235, 0.6)
+shadow_size = 9
+anti_aliasing = false
+
+[resource]
+Label/font_sizes/font_size = 36
+Label/fonts/font = ExtResource("1_6bocj")
+Label/styles/normal = SubResource("StyleBoxFlat_mkad4")
+RichTextLabel/font_sizes/normal_font_size = 36
+RichTextLabel/fonts/normal_font = ExtResource("1_6bocj")

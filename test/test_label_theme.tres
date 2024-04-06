@@ -1,7 +1,0 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cifdhwluyikjx"]
-
-[ext_resource type="FontFile" uid="uid://cxqub0sfewm4v" path="res://test/Anta-Regular.ttf" id="1_6bocj"]
-
-[resource]
-Label/font_sizes/font_size = 36
-Label/fonts/font = ExtResource("1_6bocj")
