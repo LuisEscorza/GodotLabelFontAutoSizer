@@ -5,7 +5,7 @@ class_name LabelAutoSizer
 #region External variables
 @export_group("Size values")
 ## The number of times the auto sizer will shrink the font to try to fit the text into the control rect.
-@export_range(1,100) var _max_steps: int = 1:
+@export_range(1,100) var _max_steps: int = 4:
 	set(value):
 		_max_steps = value
 		call_deferred("_check_line_count")
