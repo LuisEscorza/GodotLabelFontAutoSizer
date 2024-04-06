@@ -11,6 +11,7 @@ class_name LabelAutoSizer
 		_size_per_step = value
 		call_deferred("_check_line_count")
 @export var _print_debug_enabled: bool = true
+var _set_defaults: bool = false
 var _base_font_size: int
 var _last_size_state: LABEL_SIZE_STATE = LABEL_SIZE_STATE.IDLE
 var _current_font_size: int
@@ -31,11 +32,12 @@ func _set_base_font_size() -> void:
 
 
 func _ready() -> void:
+	if !_set_defaults:
+		set_editor_defaults()
 	if Engine.is_editor_hint():
-		_connect_signals()
+		call_deferred("_connect_signals")
 	LabelFontAutoSizeManager.register_label(self)
 	_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
-	call_deferred("_check_line_count")
 
 
 func _on_font_resource_changed() -> void:
@@ -47,6 +49,8 @@ func _on_font_resource_changed() -> void:
 
 
 func _on_label_rect_resized() -> void:
+	if !_set_defaults:
+		return
 	call_deferred("_check_line_count")
 
 
@@ -60,7 +64,7 @@ func _exit_tree() -> void:
 
 func _get_property_list():
 	var properties = []
-	var bool_properties = ["_size_just_modified_by_autosizer"]
+	var bool_properties = ["_size_just_modified_by_autosizer","_set_defaults"]
 	for name in bool_properties:
 		properties.append({
 			"name": name,
@@ -165,12 +169,12 @@ func _print_debug_message(message: String) -> void:
 
 
 func set_editor_defaults() -> void:
+	_set_defaults =  true
 	clip_text = true
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	if label_settings != null:
 		label_settings = label_settings.duplicate() ## These are not unique by default, so we it gets duplicated to not override every instance.
 		label_settings.changed.connect(_on_font_resource_changed)
-	_set_base_font_size()
 	call_deferred("_set_base_font_size")
 	set_deferred("_current_font_size", _base_font_size)
 	call_deferred("_connect_signals")
