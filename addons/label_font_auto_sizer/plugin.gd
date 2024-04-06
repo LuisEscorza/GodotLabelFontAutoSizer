@@ -87,5 +87,5 @@ func _check_label(node: Node) -> void:
 		if node is Label or node is RichTextLabel:
 			node.tree_exiting.connect(_on_label_exiting_tree.bind(node))
 			node.script_changed.connect(_on_label_script_changed.bind(node))
-			if node is LabelAutoSizer:
+			if node is LabelAutoSizer or node is RichLabelAutoSizer:
 				node.set_editor_defaults()
