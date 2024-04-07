@@ -38,8 +38,8 @@ enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED}
 func _ready() -> void:
 	if !_set_defaults:
 		set_editor_defaults()
-	else:
-		_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
+	#else:
+		#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 	if Engine.is_editor_hint():
 		call_deferred("_connect_signals")
 	LabelFontAutoSizeManager.register_label(self)
@@ -48,7 +48,7 @@ func _ready() -> void:
 ## Gets called when there are changes in either the Theme or Label Settings resources.
 ## Checks if the change was made by the script of by the user and if not, sets the base font size value.
 func _on_font_resource_changed() -> void:
-	_print_debug_message(str(name) + "' Font resource changed.")
+	#_print_debug_message(str(name) + "' Font resource changed.")
 	if _size_just_modified_by_autosizer:
 		_size_just_modified_by_autosizer = false ## Early return because the change wasn't made by the user.
 	else:
@@ -100,7 +100,7 @@ func _set_base_font_size() -> void:
 		_base_font_size = get("theme_override_font_sizes/normal_font_size")
 	elif get_theme_font_size("normal_font_size") != null:
 		_base_font_size = get_theme_font_size("normal_font_size")
-	_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
+	#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 
 ## Makes variables persistent without exposing them in the editor.
@@ -127,9 +127,7 @@ func _get_property_list():
 ## Checks the current font size and amount of lines in the text against the visible lines inside the rect.
 ## Calls for the shrink or enlarge methods accordingly.
 func _check_line_count() -> void:
-	print(get_line_count())
-	print(get_visible_line_count())
-	_print_debug_message("Checking lines of " + str(name))
+	#_print_debug_message("Checking lines of " + str(name))
 	if get_line_count() > get_visible_line_count() and _current_font_size > max(_base_font_size - (_size_per_step * _max_steps), 1):
 		_shrink_font()
 		return
@@ -141,12 +139,12 @@ func _check_line_count() -> void:
 
 ## Makes the font size smaller. Rechecks or stops the cycle depending on the conditions.
 func _shrink_font():
-	_print_debug_message(str(name) + "' shrink method called")
+	#_print_debug_message(str(name) + "' shrink method called")
 	_override_font_size(_current_font_size - _size_per_step)
-	_print_debug_message(str(name) + " shrunk " + str(_size_per_step) + "px.")
+	#_print_debug_message(str(name) + " shrunk " + str(_size_per_step) + "px.")
 	if _last_size_state == LABEL_SIZE_STATE.JUST_ENLARGED: ## To stop infinite cycles.
 		_last_size_state = LABEL_SIZE_STATE.IDLE
-		_print_debug_message(str(name) + " finished shrinking. Was just enlarged.")
+		#_print_debug_message(str(name) + " finished shrinking. Was just enlarged.")
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_SHRUNK
 		_check_line_count()
@@ -154,14 +152,14 @@ func _shrink_font():
 
 ## Makes the font size larger. Rechecks/Shrinks/stops the cycle depending on the conditions.
 func _enlarge_font():
-	_print_debug_message(str(name) + "' enlarge method called")
+	#_print_debug_message(str(name) + "' enlarge method called")
 	_override_font_size(_current_font_size + _size_per_step)
 	if _last_size_state == LABEL_SIZE_STATE.JUST_SHRUNK:
 		if  get_line_count() > get_visible_line_count():
 			_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
 			_shrink_font()
 		else: ## To stop infinite cycles.
-			_print_debug_message(str(name) + " finished enlarging. Was just shrunk.")
+			#_print_debug_message(str(name) + " finished enlarging. Was just shrunk.")
 			_last_size_state = LABEL_SIZE_STATE.IDLE
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
