@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Font Auto Size Tool"
+config/name="Font Auto Sizer"
 run/main_scene="res://demo/play_scene_demo.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 
