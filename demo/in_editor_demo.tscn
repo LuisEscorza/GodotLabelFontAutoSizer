@@ -1,98 +1,83 @@
-[gd_scene load_steps=4 format=3 uid="uid://dm1ajn5egucid"]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource type="Theme" uid="uid://cifdhwluyikjx" path="res://demo/demo_label_theme.tres" id="1_5kqak"]
-[ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="2_gbljs"]
-[ext_resource type="Script" path="res://addons/label_font_auto_sizer/rich_label_auto_sizer.gd" id="3_h5141"]
+[ext_resource path="res://demo/demo_label_theme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" type="Script" id=2]
+[ext_resource path="res://addons/label_font_auto_sizer/rich_label_auto_sizer.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://demo/Anta-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://demo/Anta-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=4]
+size = 46
+font_data = SubResource( 3 )
 
 [node name="InEditorDemo" type="Control"]
-layout_mode = 3
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_lock_ = true
+rect_pivot_offset = Vector2( -611, -59 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="BKG" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
+[node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0605303, 0.0605304, 0.0605303, 1)
-metadata/_edit_lock_ = true
+color = Color( 0.0588235, 0.0588235, 0.0588235, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="LabelWithScript" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -547.0
-offset_top = 80.0
-offset_right = -58.0
-offset_bottom = 284.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_5kqak")
-theme_override_font_sizes/font_size = 40
+[node name="Label" type="Label" parent="."]
+margin_left = 128.0
+margin_top = 479.0
+margin_right = 576.0
+margin_bottom = 672.0
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Label with autosize. Try resizing this!"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
+align = 1
+valign = 1
+autowrap = true
 clip_text = true
-script = ExtResource("2_gbljs")
-_max_steps = 10
+script = ExtResource( 2 )
 _size_just_modified_by_autosizer = false
 _set_defaults = true
 _base_font_size = 40
 _current_font_size = 40
 _last_size_state = 1
 
-[node name="LabelNoScript" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 51.0
-offset_top = 80.0
-offset_right = 540.0
-offset_bottom = 284.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_5kqak")
-theme_override_font_sizes/font_size = 40
+[node name="Label2" type="Label" parent="."]
+margin_left = 704.0
+margin_top = 479.0
+margin_right = 1151.0
+margin_bottom = 672.0
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Label with no script. You can try and resize this as well :)"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
+align = 1
+valign = 1
+autowrap = true
 clip_text = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -540.0
-offset_top = -267.0
-offset_right = 540.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(540, 165)
-theme = ExtResource("1_5kqak")
-theme_override_font_sizes/normal_font_size = 46
+margin_left = 128.0
+margin_top = 64.0
+margin_right = 1151.0
+margin_bottom = 384.0
+rect_clip_content = false
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 4 )
 text = "This is a RichTextLabel, the line count methods work are wonky, but calculating the height of the text content against the height of the rect helps us achieve the same result! Try resizing and/or editing the text!"
 scroll_active = false
-shortcut_keys_enabled = false
-script = ExtResource("3_h5141")
-_max_steps = 16
+script = ExtResource( 3 )
+_max_steps = 10
 _size_just_modified_by_autosizer = false
 _set_defaults = true
 _base_font_size = 46

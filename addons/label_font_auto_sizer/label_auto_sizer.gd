@@ -1,30 +1,29 @@
-@tool
+tool
 extends Label
 class_name LabelAutoSizer
 
-#region External variables
-@export_group("Size values")
+
+#region --External variables--
 ## The number of times the auto sizer will shrink the font to try to fit the text into the control rect.
-@export_range(1,100) var _max_steps: int = 4:
-	set(value):
-		_max_steps = value
-		call_deferred("_check_line_count")
+export(int, 1, 20) var _max_steps = 4 setget _set_max_steps
+func _set_max_steps(value):
+	_max_steps = value
+	call_deferred("_check_line_count")
+
 ## The size value in pixels that the auto sizer will shrink the font during each step.
-@export_range(1,100) var _size_per_step: int = 2:
-	set(value):
-		_size_per_step = value
-		call_deferred("_check_line_count")
-@export_group("")
-@export_group("Debug settings")
+export(int, 1, 200) var _size_per_step = 2 setget _set_size_per_steps
+func _set_size_per_steps(value):
+	_max_steps = value
+	call_deferred("_check_line_count")
+
 ## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
-@export var _print_debug_enabled: bool = false
-@export_group("")
+export(bool) var _print_debug_enabled = false
 #endregion
 
 #region --Internal variables--
 var _base_font_size: int
 var _current_font_size: int
-var _last_size_state: LABEL_SIZE_STATE = LABEL_SIZE_STATE.IDLE
+var _last_size_state = LABEL_SIZE_STATE.IDLE
 var _size_just_modified_by_autosizer: bool = false
 var _label_settings_just_duplicated: bool = false
 var _set_defaults: bool = false
@@ -47,12 +46,13 @@ func _ready() -> void:
 
 ## Gets called when there are changes in either the Theme or Label Settings resources.
 ## Checks if the change was made by the script of by the user and if not, sets the base font size value.
-func _on_font_resource_changed() -> void:
-	#_print_debug_message(str(name) + "' Font resource changed.")
-	if _size_just_modified_by_autosizer:
-		_size_just_modified_by_autosizer = false ## Early return because the change wasn't made by the user.
-	else:
-		call_deferred("_set_base_font_size")
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_THEME_CHANGED:
+		#_print_debug_message(str(name) + "' Font resource changed.")
+		if _size_just_modified_by_autosizer:
+			_size_just_modified_by_autosizer = false ## Early return because the change wasn't made by the user.
+		else:
+			call_deferred("_set_base_font_size")
 
 
 ## Gets called whenever the size of the control rect is modified (in editor). Calls the line count check.
@@ -73,40 +73,20 @@ func _exit_tree() -> void:
 	LabelFontAutoSizeManager.erase_label(self)
 #endregion
 
+
 #region --Private funcs--
-##Only in-editor, keeps stuff in check while manually changing font resources and resizing the label.
+##Only in-editor, keeps stuff in check while manually resizing the label.
 func _connect_signals() -> void:
-	if label_settings != null:
-		if !label_settings.changed.is_connected(_on_font_resource_changed):
-			label_settings.changed.connect(_on_font_resource_changed)
-	if !theme_changed.is_connected(_on_font_resource_changed):
-		theme_changed.connect(_on_font_resource_changed)
-	if !resized.is_connected(_on_label_rect_resized):
-		resized.connect(_on_label_rect_resized)
+	if !is_connected("resized", self, "_on_label_rect_resized"):
+		connect("resized", self,"_on_label_rect_resized")
 
 
 ## Text can be changed via either: set_text(value), or _my_label.text = value. Both will trigger a line check.
-## This func also checks whenever a new LabelSettings resource is un/loaded.
-func _set(property: StringName, value: Variant) -> bool:
+func _set(property: String, value) -> bool:
 	match property:
 		"text":
 			text = value
 			call_deferred("_check_line_count")
-			return true
-		"label_settings":
-			if _label_settings_just_duplicated: ## Need to check because this gets called whenever we duplicate the resource as well.
-				_label_settings_just_duplicated = false
-				return true
-			else: 
-				if value != null:
-					label_settings = value
-					_label_settings_just_duplicated = true
-					label_settings = label_settings.duplicate() ## Label Settings are not unique by default, so we it gets duplicated to not override every instance.
-					if !label_settings.changed.is_connected(_on_font_resource_changed):
-						label_settings.changed.connect(_on_font_resource_changed)
-				else:
-					label_settings = null
-				call_deferred("_set_base_font_size")
 			return true
 		_:
 			return false
@@ -115,12 +95,14 @@ func _set(property: StringName, value: Variant) -> bool:
 ## Goes through the resources in the label and sets the base font size value.
 ## Priority: Label Settings > Override Theme Font Size > Theme Font Size.
 func _set_base_font_size() -> void:
-	if label_settings != null:
-		_base_font_size = label_settings.font_size
-	elif get("theme_override_font_sizes/font_size") != null:
-		_base_font_size = get("theme_override_font_sizes/font_size")
-	elif get_theme_font_size("font_size") != null:
-		_base_font_size = get_theme_font_size("font_size")
+	if has_font_override("font"):
+		_base_font_size = get("custom_fonts/font").size
+	else:
+		var font = self.get_font("font", "Label")
+		if font is BitmapFont:
+			printerr("BitMap font found, only Dynamic fonts can be resized!")
+		else:
+			_base_font_size = font.size
 	#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 
@@ -128,14 +110,14 @@ func _set_base_font_size() -> void:
 ## Will get removed in Godot 4.3 with the upcoming @export_storage annotation.
 func _get_property_list():
 	var properties: Array = []
-	var bool_properties: Array[String] = ["_size_just_modified_by_autosizer","_set_defaults"]
+	var bool_properties: Array = ["_size_just_modified_by_autosizer","_set_defaults"]
 	for name in bool_properties:
 		properties.append({
 			"name": name,
 			"type": TYPE_BOOL,
 			"usage": PROPERTY_USAGE_STORAGE,
 		})
-	var int_properties: Array[String] = ["_base_font_size", "_current_font_size", "_last_size_state"]
+	var int_properties: Array = ["_base_font_size", "_current_font_size", "_last_size_state"]
 	for name in int_properties:
 		properties.append({
 			"name": name,
@@ -190,10 +172,9 @@ func _enlarge_font():
 ## Applies the new font size.
 func _override_font_size(new_size: int) -> void:
 	_size_just_modified_by_autosizer = true
-	if label_settings != null:
-		label_settings.font_size = new_size
-	else:
-		set("theme_override_font_sizes/font_size", new_size)
+	var font = self.get_font("font", "Label").duplicate()
+	font.size = new_size
+	add_font_override("font", font)
 	_current_font_size = new_size
 
 
@@ -209,10 +190,7 @@ func _print_debug_message(message: String) -> void:
 func set_editor_defaults() -> void:
 	_set_defaults =  true
 	clip_text = true
-	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	if label_settings != null:
-		label_settings = label_settings.duplicate() ## These are not unique by default, so we it gets duplicated to not override every instance.
-		label_settings.changed.connect(_on_font_resource_changed)
+	autowrap = true
 	call_deferred("_set_base_font_size")
 	set_deferred("_current_font_size", _base_font_size)
 	call_deferred("_connect_signals")

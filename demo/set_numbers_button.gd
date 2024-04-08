@@ -1,22 +1,23 @@
-extends Button
+extends Control
 
-@export var _labels: Array[Label]
+export(Array, NodePath) var _labelPaths
 
-static var added_numbers: Array[int]= []
+
+var added_numbers: Array = []
 
 func _on_button_clicked(_adds_number : bool):
 	if _adds_number:
-		var random_num = randi_range(0, 100)
+		var random_num = randi() % 101
 		added_numbers.append(random_num)  # Add the random number to the list
 	else:
 		if added_numbers.size() > 0:
-			added_numbers.remove_at(added_numbers.size() - 1)
-	update_labels()
+			added_numbers.remove(added_numbers.size() - 1)
+	update_labelPaths()
 
 
-func update_labels() -> void:
-	for label in _labels:
-		label.text = ""
+func update_labelPaths() -> void:
+	for path in _labelPaths:
+		get_node(path).text = ""
 		for num in added_numbers:
-			label.text += str(num) + " "
+			get_node(path).text += str(num) + " "
 
