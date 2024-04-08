@@ -20,7 +20,7 @@ func _on_child_entered_tree(node: Node) -> void:
 
 ## Called when changing scene. Gets the new root and calls for a node scan in the tree.
 func _on_scene_changed(root: Node) -> void:
-	if _current_root != null:
+	if _current_root != null and is_instance_valid(_current_root):
 		_current_root.child_entered_tree.disconnect(_on_child_entered_tree.bind())
 	_current_root = root
 	await _set_root(root)
