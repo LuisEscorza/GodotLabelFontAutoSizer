@@ -84,8 +84,8 @@ func _check_nodes_in_scene() -> void:
 ## Checks if the node is a label, starts listening for its attatched script.
 ## If the node has the script already attached, it sets the defaults directly.
 func _check_label(node: Node) -> void:
-		if node is Label or node is RichTextLabel:
-			node.tree_exiting.connect(_on_label_exiting_tree.bind(node))
-			node.script_changed.connect(_on_label_script_changed.bind(node))
-			if node is LabelAutoSizer or node is RichLabelAutoSizer:
-				node.set_editor_defaults()
+	if node is Label or node is RichTextLabel:
+		node.tree_exiting.connect(_on_label_exiting_tree.bind(node))
+		node.script_changed.connect(_on_label_script_changed.bind(node))
+		if node is LabelAutoSizer or node is RichLabelAutoSizer:
+			node.set_editor_defaults()
