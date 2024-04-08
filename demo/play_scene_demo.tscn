@@ -66,7 +66,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0605303, 0.0605304, 0.0605303, 1)
+color = Color(0.0588235, 0.0588235, 0.0588235, 1)
 metadata/_edit_lock_ = true
 
 [node name="Enabled" type="Label" parent="."]
@@ -215,7 +215,7 @@ text = "ADD NUMBERS"
 script = ExtResource("4_hu8nr")
 _labels = [NodePath("../LabelNoScript"), NodePath("../LabelWithScript"), NodePath("../LabelWithScript2"), NodePath("../LabelNoScript2")]
 
-[node name="DeleteButton2" type="Button" parent="." node_paths=PackedStringArray("_labels")]
+[node name="DeleteButton" type="Button" parent="." node_paths=PackedStringArray("_labels")]
 layout_mode = 0
 offset_left = 669.0
 offset_top = 594.0
@@ -243,4 +243,4 @@ script = ExtResource("4_hu8nr")
 _labels = [NodePath("../LabelNoScript"), NodePath("../LabelWithScript"), NodePath("../LabelWithScript2"), NodePath("../LabelNoScript2")]
 
 [connection signal="pressed" from="AddButton" to="AddButton" method="_on_button_clicked" binds= [true]]
-[connection signal="pressed" from="DeleteButton2" to="DeleteButton2" method="_on_button_clicked" binds= [false]]
+[connection signal="pressed" from="DeleteButton" to="DeleteButton" method="_on_button_clicked" binds= [false]]
