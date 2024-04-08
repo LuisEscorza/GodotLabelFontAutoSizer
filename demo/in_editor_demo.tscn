@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="2_gbljs"]
 [ext_resource type="Script" path="res://addons/label_font_auto_sizer/rich_label_auto_sizer.gd" id="3_h5141"]
 
-[node name="TestScene1" type="Control"]
+[node name="InEditorDemo" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

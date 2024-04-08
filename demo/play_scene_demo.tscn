@@ -50,7 +50,7 @@ shadow_size = 6
 shadow_offset = Vector2(5, 5)
 anti_aliasing = false
 
-[node name="TestScene1" type="Control"]
+[node name="PlaySceneDemo" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
