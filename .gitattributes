@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+project.godot export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
