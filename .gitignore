@@ -15,4 +15,5 @@ data_*/
 mono_crash.*.json
 
 # Other ignores
-icon.png.import
+media/icon.png.import
+addons/label_font_auto_sizer/icon.svg.import
