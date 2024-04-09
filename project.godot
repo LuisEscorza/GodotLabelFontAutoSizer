@@ -13,6 +13,7 @@ config_version=5
 config/name="Label Font Auto Sizer"
 run/main_scene="res://demo/play_scene_demo.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.png"
 
 [debug]
 

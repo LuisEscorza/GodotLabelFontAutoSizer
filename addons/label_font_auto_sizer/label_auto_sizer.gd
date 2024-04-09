@@ -1,7 +1,7 @@
 @tool
+@icon ("res://addons/label_font_auto_sizer/icon.svg")
 extends Label
 class_name LabelAutoSizer
-
 #region External variables
 @export_group("Size values")
 ## The number of times the auto sizer will shrink the font to try to fit the text into the control rect.
