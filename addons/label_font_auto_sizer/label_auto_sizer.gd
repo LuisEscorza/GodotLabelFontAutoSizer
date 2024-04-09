@@ -1,6 +1,6 @@
 tool
 extends Label
-class_name LabelAutoSizer
+class_name LabelAutoSizer, "res://addons/label_font_auto_sizer/label_font_auto_sizer.svg"
 
 
 #region --External variables--

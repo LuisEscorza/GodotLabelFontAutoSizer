@@ -20,14 +20,15 @@ _global_script_classes=[ {
 "path": "res://addons/label_font_auto_sizer/rich_label_auto_sizer.gd"
 } ]
 _global_script_class_icons={
-"LabelAutoSizer": "",
-"RichLabelAutoSizer": ""
+"LabelAutoSizer": "res://addons/label_font_auto_sizer/LabelFontAutoSizer.svg",
+"RichLabelAutoSizer": "res://addons/label_font_auto_sizer/LabelFontAutoSizer.svg"
 }
 
 [application]
 
 config/name="Label Font Auto Sizer"
 run/main_scene="res://demo/play_scene_demo.tscn"
+config/icon="res://addons/label_font_auto_sizer/label_font_auto_sizer.svg"
 
 [autoload]
 

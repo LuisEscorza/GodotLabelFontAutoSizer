@@ -1,6 +1,6 @@
 tool
 extends RichTextLabel
-class_name RichLabelAutoSizer
+class_name RichLabelAutoSizer, "res://addons/label_font_auto_sizer/label_font_auto_sizer.svg"
 
 #region External variables
 ## The number of times the auto sizer will shrink the font to try to fit the text into the control rect.
