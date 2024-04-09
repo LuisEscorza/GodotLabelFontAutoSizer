@@ -105,5 +105,8 @@ func _check_label(node: Node) -> void:
 			node.connect("tree_exiting", self, "_on_label_exiting_tree", [node])
 		if !node.is_connected("script_changed", self, "_on_label_script_changed"):
 			node.connect("script_changed", self, "_on_label_script_changed", [node])
-		if node is LabelAutoSizer or node is RichLabelAutoSizer:
+			
+		var script: Script = node.get_script()
+		if script != null and script.resource_path.ends_with("label_auto_sizer.gd"):
 			node.set_editor_defaults()
+

@@ -27,6 +27,7 @@ var _last_size_state = LABEL_SIZE_STATE.IDLE
 var _size_just_modified_by_autosizer: bool = false
 var _label_settings_just_duplicated: bool = false
 var _set_defaults: bool = false
+var _autosize_manager
 #endregion
 
 enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
@@ -41,7 +42,8 @@ func _ready() -> void:
 		#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 	if Engine.is_editor_hint():
 		call_deferred("_connect_signals")
-	LabelFontAutoSizeManager.register_label(self)
+	_autosize_manager = get_node("/root/LabelFontAutoSizeManager")
+	_autosize_manager.register_label(self)
 
 
 ## Gets called when there are changes in either the Theme or Label Settings resources.
@@ -70,7 +72,7 @@ func _on_locale_changed() -> void:
 
 ## Gets called on scene changes and when the label is freed and erases itself from the autosize manager.
 func _exit_tree() -> void:
-	LabelFontAutoSizeManager.erase_label(self)
+	_autosize_manager.erase_label(self)
 #endregion
 
 
