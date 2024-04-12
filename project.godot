@@ -20,13 +20,14 @@ _global_script_classes=[ {
 "path": "res://addons/label_font_auto_sizer/rich_label_auto_sizer.gd"
 } ]
 _global_script_class_icons={
-"LabelAutoSizer": "res://addons/label_font_auto_sizer/LabelFontAutoSizer.svg",
-"RichLabelAutoSizer": "res://addons/label_font_auto_sizer/LabelFontAutoSizer.svg"
+"LabelAutoSizer": "res://addons/label_font_auto_sizer/label_font_auto_sizer.svg",
+"RichLabelAutoSizer": "res://addons/label_font_auto_sizer/label_font_auto_sizer.svg"
 }
 
 [application]
 
-config/name="Label Font Auto Sizer"
+config/name="Label Font Auto Sizer - Godot 3"
+config/description="Tool that adds Labels with text autosizing capabilities."
 run/main_scene="res://demo/play_scene_demo.tscn"
 config/icon="res://addons/label_font_auto_sizer/label_font_auto_sizer.svg"
 
@@ -50,3 +51,7 @@ common/drop_mouse_on_gui_input_disabled=true
 [physics]
 
 common/enable_pause_aware_picking=true
+
+[rendering]
+
+quality/driver/driver_name=""
