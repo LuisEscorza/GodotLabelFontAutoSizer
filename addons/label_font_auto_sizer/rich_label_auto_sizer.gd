@@ -46,6 +46,8 @@ func _ready() -> void:
 		#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 	if Engine.is_editor_hint():
 		call_deferred("_connect_signals")
+	else:
+		_check_line_count()
 	LabelFontAutoSizeManager.register_label(self)
 
 
