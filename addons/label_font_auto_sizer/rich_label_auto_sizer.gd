@@ -9,12 +9,14 @@ class_name RichLabelAutoSizer
 @export_range(1,100) var _max_steps: int = 4:
 	set(value):
 		_max_steps = value
-		call_deferred("_check_line_count")
+		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, before it's ready, which might not be desirable when using auto translate.
+			call_deferred("_check_line_count") 
 ## The size value in pixels that the auto sizer will shrink the font during each step.
 @export_range(1,100) var _size_per_step: int = 2:
 	set(value):
 		_size_per_step = value
-		call_deferred("_check_line_count")
+		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, before it's ready, which might not be desirable when using auto translate.
+			call_deferred("_check_line_count")
 @export_group("")
 @export_group("Debug settings")
 ## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
@@ -29,9 +31,10 @@ var _last_size_state: LABEL_SIZE_STATE = LABEL_SIZE_STATE.IDLE
 var _size_just_modified_by_autosizer: bool = false
 var _label_settings_just_duplicated: bool = false
 var _set_defaults: bool = false
-#endregion
 
 enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
+#endregion
+
 
 
 #region --Signal funcs--
