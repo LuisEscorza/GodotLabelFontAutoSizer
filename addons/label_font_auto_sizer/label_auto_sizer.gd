@@ -2,7 +2,6 @@ tool
 extends Label
 class_name LabelAutoSizer, "res://addons/label_font_auto_sizer/label_font_auto_sizer.svg"
 
-
 #region --External variables--
 ## The number of times the auto sizer will shrink the font to try to fit the text into the control rect.
 export(int, 1, 20) var _max_steps = 4 setget _set_max_steps
@@ -28,9 +27,10 @@ var _size_just_modified_by_autosizer: bool = false
 var _label_settings_just_duplicated: bool = false
 var _set_defaults: bool = false
 var _autosize_manager
-#endregion
 
 enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
+#endregion
+
 
 
 #region --Signal funcs--
@@ -105,6 +105,7 @@ func _set_base_font_size() -> void:
 			printerr("BitMap font found, only Dynamic fonts can be resized!")
 		else:
 			_base_font_size = font.size
+	_current_font_size = _base_font_size
 	#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 

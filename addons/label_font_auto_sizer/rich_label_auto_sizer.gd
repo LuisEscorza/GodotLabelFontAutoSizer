@@ -16,7 +16,6 @@ func _set_size_per_steps(value):
 
 ## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
 export(bool) var _print_debug_enabled = false
-
 #endregion
 
 #region --Internal variables--
@@ -27,9 +26,9 @@ var _size_just_modified_by_autosizer: bool = false
 var _label_settings_just_duplicated: bool = false
 var _set_defaults: bool = false
 var _autosize_manager
-#endregion
 
 enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
+#endregion
 
 
 #region --Signal funcs--
@@ -100,6 +99,7 @@ func _set_base_font_size() -> void:
 	else:
 		var font = self.get_font("normal_font", "RichTextLabel")
 		_base_font_size = font.size
+	_current_font_size = _base_font_size
 	#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 
