@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Label Font Auto Sizer"
+config/name="Label Font Auto Sizer - Godot 4"
+config/description="Tool that adds Labels with text autosizing capabilities."
 run/main_scene="res://demo/play_scene_demo.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://media/icon.png"
@@ -35,6 +36,7 @@ enabled=PackedStringArray("res://addons/label_font_auto_sizer/plugin.cfg")
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method=""
 textures/decals/filter=0
 textures/light_projectors/filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
