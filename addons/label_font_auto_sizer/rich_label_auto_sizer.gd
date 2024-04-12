@@ -104,6 +104,7 @@ func _set_base_font_size() -> void:
 		_base_font_size = get("theme_override_font_sizes/normal_font_size")
 	elif get_theme_font_size("normal_font_size") != null:
 		_base_font_size = get_theme_font_size("normal_font_size")
+	_current_font_size = _base_font_size
 	#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 
