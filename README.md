@@ -37,6 +37,8 @@ After this, you can change your font size manually at any moment and it will bec
 
 _If you want to trigger a size check on a label at any given time, you can do so with `my_label._check_line_count()`, although there shouldn’t be a reason for it._
 
+_If you're doing some testing/developing, if you are changing the text from withit one of the label classes themselves, do it like `self.set_text(value)` or `self.text = value`, othersise it doesn't trigger a size check. In a real scenario you wouldn't be changing the text from within the class itself though._
+
 ### Usage differences in Godot 3
 - The tool works pretty much the same. The one difference is that in Godot 3, if you don’t use any font other than the default one, you'll get an error message asking to use a `DynamicFont`, because `BitMapFont` cannot be resized. After you set a `DynamicFont` you can use the label normally and the text will resize correctly.
 
