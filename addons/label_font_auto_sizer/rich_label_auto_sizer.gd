@@ -137,12 +137,14 @@ func _get_property_list():
 ## Calls for the shrink or enlarge methods accordingly.
 func _check_line_count() -> void:
 	#_print_debug_message("Checking lines of " + str(name))
-	if get_content_height() > size.y and _current_font_size > max(_base_font_size - (_size_per_step * _max_steps), 1):
-		_shrink_font()
-		return
-	elif get_content_height() <= size.y and _current_font_size < _base_font_size:
-		_enlarge_font()
-		return
+	if get_content_height() > size.y or get_content_width() > size.x:
+		if _current_font_size > max(_base_font_size - (_size_per_step * _max_steps), 1):
+			_shrink_font()
+			return
+	elif get_content_height() <= size.y or get_content_width() <= size.x:
+		if _current_font_size < _base_font_size:
+			_enlarge_font()
+			return
 	_last_size_state = LABEL_SIZE_STATE.IDLE
 
 
