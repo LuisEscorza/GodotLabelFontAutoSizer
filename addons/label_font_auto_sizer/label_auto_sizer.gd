@@ -84,6 +84,8 @@ func _connect_signals() -> void:
 
 
 ## Text can be changed via either: set_text(value), or _my_label.text = value. Both will trigger a line check.
+##**If you're doing some testing/developing, if you are changing the text from withit one of the label classes themselves, do it like self.set_text(value) or self.text = value, othersise it doesn't trigger a size check.
+##In a real scenario you wouldn't be changing the text from within the class itself though.**
 func _set(property: String, value) -> bool:
 	match property:
 		"text":
@@ -200,6 +202,8 @@ func set_editor_defaults() -> void:
 
 
 ## Text can be changed via either: set_text(value), or _my_label.text = value. Both will trigger a line check.
+##**If you're doing some testing/developing, if you are changing the text from withit one of the label classes themselves, do it like self.set_text(value) or self.text = value, othersise it doesn't trigger a size check.
+##In a real scenario you wouldn't be changing the text from within the class itself though.**
 func set_text(new_text: String) -> void:
 	text = new_text
 	call_deferred("_check_line_count")
