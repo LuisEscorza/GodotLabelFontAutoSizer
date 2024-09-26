@@ -5,21 +5,6 @@
 [ext_resource type="Script" path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" id="3_bwkhl"]
 [ext_resource type="Script" path="res://demo/set_numbers_button.gd" id="4_hu8nr"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mh8qh"]
-bg_color = Color(0.8, 0.8, 0.8, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-shadow_size = 6
-shadow_offset = Vector2(5, 5)
-anti_aliasing = false
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkevp"]
 bg_color = Color(0.8, 0.8, 0.8, 1)
 border_width_left = 5
@@ -42,6 +27,21 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_size = 6
+shadow_offset = Vector2(5, 5)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mh8qh"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -114,11 +114,10 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 script = ExtResource("3_bwkhl")
-_size_just_modified_by_autosizer = false
-_set_defaults = true
-_base_font_size = 36
+_max_size = 36
+_min_size = 20
 _current_font_size = 36
-_last_size_state = 1
+_editor_defaults_set = true
 
 [node name="LabelWithScript2" type="Label" parent="."]
 layout_mode = 1
@@ -141,12 +140,10 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 script = ExtResource("3_bwkhl")
-_max_steps = 10
-_size_just_modified_by_autosizer = false
-_set_defaults = true
-_base_font_size = 36
+_max_size = 36
+_min_size = 20
 _current_font_size = 36
-_last_size_state = 1
+_editor_defaults_set = true
 
 [node name="LabelNoScript" type="Label" parent="."]
 layout_mode = 1
@@ -194,23 +191,23 @@ offset_left = 310.0
 offset_top = 594.0
 offset_right = 613.0
 offset_bottom = 666.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_mh8qh")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pkevp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5mxln")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mh8qh")
 text = "ADD NUMBERS"
 script = ExtResource("4_hu8nr")
 _labels = [NodePath("../LabelNoScript"), NodePath("../LabelWithScript"), NodePath("../LabelWithScript2"), NodePath("../LabelNoScript2")]
@@ -221,23 +218,23 @@ offset_left = 669.0
 offset_top = 594.0
 offset_right = 972.0
 offset_bottom = 666.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_mh8qh")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pkevp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5mxln")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mh8qh")
 text = "DELETE NUMBERS"
 script = ExtResource("4_hu8nr")
 _labels = [NodePath("../LabelNoScript"), NodePath("../LabelWithScript"), NodePath("../LabelWithScript2"), NodePath("../LabelNoScript2")]

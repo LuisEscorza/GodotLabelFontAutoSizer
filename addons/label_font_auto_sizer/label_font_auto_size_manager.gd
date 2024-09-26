@@ -2,9 +2,12 @@
 extends Node
 class_name  LabelFontAutoSizeManager
 
+#region Variables
 static var _active_labels : Array[Control]
+#endregion
 
 
+#region Public functions
 static func register_label(label: Control) -> void:
 	_active_labels.append(label)
 
@@ -19,3 +22,5 @@ static func erase_label(label: Control) -> void:
 static func locale_chaged() -> void:
 	for label: Control in _active_labels:
 		label._on_locale_changed()
+#endregion
+
