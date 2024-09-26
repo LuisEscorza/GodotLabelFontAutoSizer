@@ -4,23 +4,27 @@ extends RichTextLabel
 class_name RichLabelAutoSizer
 
 #region External variables
-@export_group("Size values")
-## The number of times the auto sizer will shrink the font to try to fit the text into the control rect.
-@export_range(1,100) var _max_steps: int = 4:
+## The maximum size value in pixels that the font will grow to.
+@export_range(1, 192, 1, "or_greater", "suffix:px") var _max_size: int = 64:
 	set(value):
-		_max_steps = value
-		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, before it's ready, which might not be desirable when using auto translate.
-## The size value in pixels that the auto sizer will shrink the font during each step.
-@export_range(1,100) var _size_per_step: int = 2:
+		if value >_min_size:
+			_max_size = value
+		else:
+			_max_size = _min_size
+		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, even before it's ready. This if check prevents it.
 			call_deferred(_check_line_count.get_method())
+## The minimum size value in pixels that the font will shrink to.
+@export_range(1, 192, 1, "or_greater", "suffix:px") var _min_size: int = 1:
 	set(value):
-		_size_per_step = value
-		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, before it's ready, which might not be desirable when using auto translate.
-@export_group("")
 @export_group("Debug settings")
 ## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
 @export var _print_debug_enabled: bool = false
 @export_group("")
+		if value < _max_size:
+			_min_size = value
+		else:
+			_min_size = _max_size
+		if is_node_ready(): ## Same as _max_size comment.
 			call_deferred(_check_line_count.get_method())
 @export var _lock_size_in_editor: bool =  false:
 	set(value):
@@ -63,7 +67,7 @@ func _on_font_resource_changed() -> void:
 	if _size_just_modified_by_autosizer:
 		_size_just_modified_by_autosizer = false ## Early return because the change wasn't made by the user.
 	else:
-		call_deferred("_set_base_font_size")
+		_apply_font_size(_current_font_size)
 
 
 ## Gets called whenever the size of the control rect is modified (in editor). Calls the line count check.
@@ -108,12 +112,10 @@ func _set(property: StringName, value: Variant) -> bool:
 
 ## Goes through the resources in the label and sets the base font size value.
 ## Priority: Override Theme Font Size > Theme Font Size. (RichTextLabels don't allow Label Settings)
-func _set_base_font_size() -> void:
+func _check_font_size() -> void:
 	if get("theme_override_font_sizes/normal_font_size") != null:
-		_base_font_size = get("theme_override_font_sizes/normal_font_size")
+		_current_font_size = get("theme_override_font_sizes/normal_font_size")
 	elif get_theme_font_size("normal_font_size") != null:
-		_base_font_size = get_theme_font_size("normal_font_size")
-	_current_font_size = _base_font_size
 	#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 
@@ -136,21 +138,29 @@ func _get_property_list():
 			"usage": PROPERTY_USAGE_STORAGE,
 		})
 	return properties
+		_current_font_size = get_theme_font_size("normal_font_size")
 
 
 ## Checks the current font size and amount of lines in the text against the visible lines inside the rect.
 ## Calls for the shrink or enlarge methods accordingly.
 func _check_line_count() -> void:
 	#_print_debug_message("Checking lines of " + str(name))
-	if get_content_height() > size.y or get_content_width() > size.x:
-		if _current_font_size > max(_base_font_size - (_size_per_step * _max_steps), 1):
 	if Engine.is_editor_hint() and _lock_size_in_editor:
 		return
 	
+	if _current_font_size > _max_size and _current_font_size > _min_size:
+		_shrink_font()
+		return
+	elif get_content_height() > size.y or get_content_width() > size.x:
+		if _current_font_size > _min_size:
 			_shrink_font()
 			return
+	
+	if _current_font_size < _max_size and _current_font_size < _min_size:
+		_enlarge_font()
+		return
 	elif get_content_height() <= size.y or get_content_width() <= size.x:
-		if _current_font_size < _base_font_size:
+		if _current_font_size < _max_size:
 			_enlarge_font()
 			return
 	_last_size_state = LABEL_SIZE_STATE.IDLE
@@ -159,8 +169,8 @@ func _check_line_count() -> void:
 ## Makes the font size smaller. Rechecks or stops the cycle depending on the conditions.
 func _shrink_font():
 	#_print_debug_message(str(name) + "' shrink method called")
-	_override_font_size(_current_font_size - _size_per_step)
 	#_print_debug_message(str(name) + " shrunk " + str(_size_per_step) + "px.")
+	_apply_font_size(_current_font_size - 1)
 	if _last_size_state == LABEL_SIZE_STATE.JUST_ENLARGED: ## To stop infinite cycles.
 		_last_size_state = LABEL_SIZE_STATE.IDLE
 		#_print_debug_message(str(name) + " finished shrinking. Was just enlarged.")
@@ -172,7 +182,7 @@ func _shrink_font():
 ## Makes the font size larger. Rechecks/Shrinks/stops the cycle depending on the conditions.
 func _enlarge_font():
 	#_print_debug_message(str(name) + "' enlarge method called")
-	_override_font_size(_current_font_size + _size_per_step)
+	_apply_font_size(_current_font_size + 1)
 	if _last_size_state == LABEL_SIZE_STATE.JUST_SHRUNK:
 		if  get_content_height() > size.y:
 			_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
@@ -186,7 +196,7 @@ func _enlarge_font():
 
 
 ## Applies the new font size.
-func _override_font_size(new_size: int) -> void:
+func _apply_font_size(new_size: int) -> void:
 	_size_just_modified_by_autosizer = true
 	set("theme_override_font_sizes/normal_font_size", new_size)
 	_current_font_size = new_size
@@ -207,13 +217,9 @@ func set_editor_defaults() -> void:
 	fit_content = false
 	scroll_active = false
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	call_deferred("_set_base_font_size")
-	call_deferred("_set_current_font_size_to_base")
-	call_deferred("_connect_signals")
-
-## For some reason using set_deferred() wasn't doing it after setting the base size, so this gets called deferred.
-func _set_current_font_size_to_base() -> void:
-	_current_font_size = _base_font_size
+	_check_font_size()
+	_connect_signals()
+	set_deferred("_max_size", _current_font_size)
 
 
 ## Text can be changed via either: set_text(value), or _my_label.text = value. Both will trigger a line check.
