@@ -10,18 +10,18 @@ class_name LabelAutoSizer
 	set(value):
 		_max_steps = value
 		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, before it's ready, which might not be desirable when using auto translate.
-			call_deferred("_check_line_count") 
 ## The size value in pixels that the auto sizer will shrink the font during each step.
 @export_range(1,100) var _size_per_step: int = 2:
+			call_deferred(_check_line_count.get_method())
 	set(value):
 		_size_per_step = value
 		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, before it's ready, which might not be desirable when using auto translate.
-			call_deferred("_check_line_count")
 @export_group("")
 @export_group("Debug settings")
 ## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
 @export var _print_debug_enabled: bool = false
 @export_group("")
+			call_deferred(_check_line_count.get_method())
 @export var _lock_size_in_editor: bool =  false:
 	set(value):
 		_lock_size_in_editor = value
@@ -51,7 +51,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		call_deferred("_connect_signals")
 	else:
-		_check_line_count()
+		call_deferred(_check_line_count.get_method())
 	LabelFontAutoSizeManager.register_label(self)
 
 
@@ -69,13 +69,12 @@ func _on_font_resource_changed() -> void:
 func _on_label_rect_resized() -> void:
 	if !_set_defaults:
 		return
-	call_deferred("_check_line_count")
+	call_deferred(_check_line_count.get_method())
 
 
 ## Called by autosize manager whenever the locale_chaged() method is called, as the tr() object changes don't trigger
 ## the set_text() method of the label, thus the size and line_amount doesn't get checked.
 func _on_locale_changed() -> void:
-	call_deferred("_check_line_count")
 
 
 ## Gets called on scene changes and when the label is freed and erases itself from the autosize manager.
@@ -103,7 +102,7 @@ func _set(property: StringName, value: Variant) -> bool:
 	match property:
 		"text":
 			text = value
-			call_deferred("_check_line_count")
+			call_deferred(_check_line_count.get_method())
 			return true
 		"label_settings":
 			if _label_settings_just_duplicated: ## Need to check because this gets called whenever we duplicate the resource as well.
@@ -238,6 +237,6 @@ func set_editor_defaults() -> void:
 ##In a real scenario you wouldn't be changing the text from within the class itself though.**
 func set_text(new_text: String) -> void:
 	text = new_text
-	call_deferred("_check_line_count")
+	call_deferred(_check_line_count.get_method())
 #endregion
 
