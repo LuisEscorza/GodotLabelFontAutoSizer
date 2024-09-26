@@ -22,6 +22,11 @@ class_name LabelAutoSizer
 ## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
 @export var _print_debug_enabled: bool = false
 @export_group("")
+@export var _lock_size_in_editor: bool =  false:
+	set(value):
+		_lock_size_in_editor = value
+		if value == false:
+			call_deferred(_check_line_count.get_method())
 #endregion
 
 #region --Internal variables--
@@ -158,6 +163,8 @@ func _get_property_list():
 func _check_line_count() -> void:
 	#_print_debug_message("Checking lines of " + str(name))
 	if get_line_count() > get_visible_line_count() and _current_font_size > max(_base_font_size - (_size_per_step * _max_steps), 1):
+	if Engine.is_editor_hint() and _lock_size_in_editor:
+		return
 		_shrink_font()
 		return
 	elif get_line_count() == get_visible_line_count() and _current_font_size < _base_font_size:
