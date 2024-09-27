@@ -20,20 +20,17 @@
   <img src="https://github.com/LuisEscorza/GodotLabelFontAutoSizer/blob/main/media/preview.gif?raw=true"/>
 </p>
 
+#### *Disclaimer: Text with different font sizes when not intended usually look bad, so I'd advise using this addon pretty much as a last resort. Before using this addon you should probably try adding more space for your text, using abbreviated words, or adding a scrol bar.*
+
 ## Installation
-- If you're using Godot 4.0 or 4.1 read the last paragraph [here](https://github.com/LuisEscorza/GodotLabelFontAutoSizer/releases/tag/v1.0.0_godot_4.2).
+- If you're using Godot 4.0 or 4.1 read the last paragraph [here](https://github.com/LuisEscorza/GodotLabelFontAutoSizer/releases/tag/v1.0.0_godot_4.2). This addon works with Godot 4.2 onwards.
 - Download the latest [release](https://github.com/LuisEscorza/GodotLabelFontAutoSizer/releases) for your Godot engine version and drop the contents inside the root folder of your project or download and import the addon from the [Asset Library](https://godotengine.org/asset-library/).
 - Go to `Project` -> `Project Settings` -> `Plugins` and enable LabelFontAutoSizer.
 
 ## How to use
-1. **Create an auto sizer `Label` or `RichTextLabel`:** from the `Create New Node` menu directly. Just search for `Label` and you will find the new versions under the normal `Label` and `RichTextLabel` nodes respectively.
-   - If you want to use your already created labels, just `Right Click` them -> `Change Type...` and choose the version with the auto sizer. Or just drag the appropiate script from the addons folder if you find that more comfortable.
-2. **Set your font and size normally.** The fonts won't grow over the size you set.
-   - Like with normal `Label` nodes, there is a priority for which font and size is the active one; `Label Settings Resource` _(not present in `RichTextLabel`)_ -> `Theme Overrides` -> `Theme`. If you don't set any, the default font will be used, with its 16px size.
-3. **Set the rest of the size values:** in the inspector dock, on top, you'll find two groups of properties. Open `Size values` and set `Max Steps`(maximum of iterations the font will try to shrink to fit inside the `Label Rect`) and `Size per Step`(How many pixels will the font shrink each step).
-4. **You're set!** Now the font will be resized every time it's necessary after changing the `Text`(via `my_label.text = value` or `my_label.set_text(value)`, or after resizing the `Rect` of the label, both in the editor or at runtime.
-
-After this, you can change your font size manually at any moment and it will become the new base size.
+1. **Create an `AutoSize` `Label` or `RichTextLabel`:** from the `Create New Node` menu directly. Just search for `AutoSize` and you will find the new versions under the normal `Label` and `RichTextLabel` nodes respectively (pick the one without the script file name in the parenthesis).
+2. **Set your font sizes.** You can set a `min_size` and `max_size`. Doesn't matter what Theme (or Theme Overrides) or Label Settings you're using, the font size will be set by the max and min sizes.
+3. **You're set!** Now the font will be resized every time it's necessary.
 
 _If you want to trigger a size check on a label at any given time, you can do so with `my_label._check_line_count()`, although there shouldn’t be a reason for it._
 
