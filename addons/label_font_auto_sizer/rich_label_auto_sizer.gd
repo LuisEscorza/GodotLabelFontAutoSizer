@@ -80,12 +80,16 @@ func _connect_signals() -> void:
 		connect("resized", self,"_on_label_rect_resized")
 
 
-## Text can be changed via either: set_text(value), or _my_label.text = value. Both will trigger a line check.
+## Text can be changed via either: set_text(value)/set_bbcode(value), or _my_label.text = value / _my_label.bbcode_text = value. Both will trigger a line check.
 ##**If you're doing some testing/developing, if you are changing the text from withit one of the label classes themselves, do it like self.set_text(value) or self.text = value, othersise it doesn't trigger a size check.
 ##In a real scenario you wouldn't be changing the text from within the class itself though.**
 func _set(property: String, value) -> bool:
 	match property:
 		"text":
+			text = value
+			call_deferred("_check_line_count")
+			return true
+		"bbcode_text":
 			text = value
 			call_deferred("_check_line_count")
 			return true
@@ -196,16 +200,22 @@ func set_editor_defaults() -> void:
 	call_deferred("_set_current_font_size_to_base")
 	call_deferred("_connect_signals")
 
+
 ## For some reason using set_deferred() wasn't doing it after setting the base size, so this gets called deferred.
 func _set_current_font_size_to_base() -> void:
 	_current_font_size = _base_font_size
 
 
-## Text can be changed via either: set_text(value), or _my_label.text = value. Both will trigger a line check.
+## Text can be changed via either: set_text(value)/set_bbcode(value), or _my_label.text = value / _my_label.bbcode_text = value. Both will trigger a line check.
 ##**If you're doing some testing/developing, if you are changing the text from withit one of the label classes themselves, do it like self.set_text(value) or self.text = value, othersise it doesn't trigger a size check.
 ##In a real scenario you wouldn't be changing the text from within the class itself though.**
 func set_text(new_text: String) -> void:
 	text = new_text
+	call_deferred("_check_line_count")
+
+
+func set_bbcode(new_text: String) -> void:
+	bbcode_text = new_text
 	call_deferred("_check_line_count")
 #endregion
 
