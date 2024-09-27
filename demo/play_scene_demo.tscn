@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://demo/set_numbers_button.gd" type="Script" id=1]
 [ext_resource path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" type="Script" id=2]
@@ -15,8 +15,20 @@ font_data = SubResource( 1 )
 size = 56
 font_data = SubResource( 1 )
 
+[sub_resource type="DynamicFont" id=7]
+size = 36
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 61
+font_data = SubResource( 1 )
+
 [sub_resource type="DynamicFont" id=4]
 size = 36
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 64
 font_data = SubResource( 1 )
 
 [sub_resource type="DynamicFontData" id=5]
@@ -69,16 +81,18 @@ margin_top = 191.0
 margin_right = 507.0
 margin_bottom = 287.0
 theme = ExtResource( 3 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 7 )
 text = "Label with script"
 align = 1
 valign = 1
 autowrap = true
 clip_text = true
 script = ExtResource( 2 )
+_max_size = 36
+_min_size = 20
 _size_just_modified_by_autosizer = false
 _set_defaults = true
-_base_font_size = 36
+_base_font_size = null
 _current_font_size = 36
 _last_size_state = 1
 
@@ -88,18 +102,18 @@ margin_top = 353.0
 margin_right = 542.0
 margin_bottom = 516.0
 theme = ExtResource( 3 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 8 )
 text = "Label with script"
 align = 1
 valign = 1
 autowrap = true
 clip_text = true
 script = ExtResource( 2 )
-_max_steps = 5
+_min_size = 30
 _size_just_modified_by_autosizer = false
 _set_defaults = true
-_base_font_size = 36
-_current_font_size = 36
+_base_font_size = null
+_current_font_size = 61
 _last_size_state = 1
 
 [node name="LabelNoScript" type="Label" parent="."]
@@ -121,18 +135,17 @@ margin_top = 353.0
 margin_right = 1181.0
 margin_bottom = 516.0
 theme = ExtResource( 3 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 9 )
 text = "Label with no script"
 align = 1
 valign = 1
 autowrap = true
 clip_text = true
 script = ExtResource( 2 )
-_max_steps = 2
 _size_just_modified_by_autosizer = false
 _set_defaults = true
-_base_font_size = 36
-_current_font_size = 36
+_base_font_size = null
+_current_font_size = 64
 _last_size_state = 1
 
 [node name="AddButton" type="Button" parent="."]

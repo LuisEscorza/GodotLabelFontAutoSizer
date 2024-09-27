@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://demo/demo_label_theme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/label_font_auto_sizer/label_auto_sizer.gd" type="Script" id=2]
@@ -7,6 +7,10 @@
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://demo/Anta-Regular.ttf"
 
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = SubResource( 1 )
+
 [sub_resource type="DynamicFont" id=2]
 size = 40
 font_data = SubResource( 1 )
@@ -14,8 +18,8 @@ font_data = SubResource( 1 )
 [sub_resource type="DynamicFontData" id=3]
 font_path = "res://demo/Anta-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=4]
-size = 46
+[sub_resource type="DynamicFont" id=5]
+size = 45
 font_data = SubResource( 3 )
 
 [node name="InEditorDemo" type="Control"]
@@ -40,19 +44,18 @@ margin_top = 479.0
 margin_right = 576.0
 margin_bottom = 672.0
 theme = ExtResource( 1 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Label with autosize. Try resizing this!"
 align = 1
 valign = 1
 autowrap = true
 clip_text = true
 script = ExtResource( 2 )
-_max_steps = 4
-_size_per_step = 2
-_print_debug_enabled = false
+_max_size = 40
+_min_size = 20
 _size_just_modified_by_autosizer = false
 _set_defaults = true
-_base_font_size = 40
+_base_font_size = null
 _current_font_size = 40
 _last_size_state = 1
 
@@ -72,19 +75,18 @@ clip_text = true
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 margin_left = 128.0
 margin_top = 64.0
-margin_right = 1151.0
-margin_bottom = 384.0
+margin_right = 1149.0
+margin_bottom = 411.0
 rect_clip_content = false
 theme = ExtResource( 1 )
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 5 )
 text = "This is a RichTextLabel, the line count methods work are wonky, but calculating the height of the text content against the height of the rect helps us achieve the same result! Try resizing and/or editing the text!"
 scroll_active = false
 script = ExtResource( 3 )
-_max_steps = 10
-_size_per_step = 2
-_print_debug_enabled = false
+_max_size = 45
+_min_size = 30
 _size_just_modified_by_autosizer = false
 _set_defaults = true
-_base_font_size = 46
-_current_font_size = 46
+_base_font_size = null
+_current_font_size = 45
 _last_size_state = 1
