@@ -163,7 +163,7 @@ func _shrink_font():
 		#_print_debug_message(str(name) + " finished shrinking. Was just enlarged.")
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_SHRUNK
-		_check_line_count()
+		call_deferred("_check_line_count")
 
 
 ## Makes the font size larger. Rechecks/Shrinks/stops the cycle depending on the conditions.
@@ -179,7 +179,7 @@ func _enlarge_font():
 			_last_size_state = LABEL_SIZE_STATE.IDLE
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
-		_check_line_count()
+		call_deferred("_check_line_count")
 
 
 ## Applies the new font size.
