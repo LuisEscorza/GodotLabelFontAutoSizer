@@ -8,11 +8,18 @@ export(int, 1, 100) var _max_steps = 4 setget _set_max_steps
 func _set_max_steps(value):
 	_max_steps = value
 	call_deferred("_check_line_count")
+
 ## The size value in pixels that the auto sizer will shrink the font during each step.
 export(int, 1, 200) var _size_per_step = 2 setget _set_size_per_steps
 func _set_size_per_steps(value):
 	_max_steps = value
 	call_deferred("_check_line_count")
+
+export(bool) var _lock_size_in_editor =  false setget _set_lock_size_in_editor
+func _set_lock_size_in_editor(value) -> void:
+	_lock_size_in_editor = value
+	if value == false:
+		call_deferred("_check_line_count")
 
 ## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
 export(bool) var _print_debug_enabled = false
@@ -133,6 +140,8 @@ func _get_property_list():
 ## Checks the current font size and amount of lines in the text against the visible lines inside the rect.
 ## Calls for the shrink or enlarge methods accordingly.
 func _check_line_count() -> void:
+	if Engine.is_editor_hint() and _lock_size_in_editor:
+		return
 #	_print_debug_message("Checking lines of " + str(name))
 	if get_content_height() > rect_size.y and _current_font_size > max(_base_font_size - (_size_per_step * _max_steps), 1):
 		_shrink_font()
