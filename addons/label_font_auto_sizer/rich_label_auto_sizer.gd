@@ -2,7 +2,6 @@ tool
 extends RichTextLabel
 class_name RichLabelAutoSizer, "res://addons/label_font_auto_sizer/label_font_auto_sizer.svg"
 
-#region --External variables--
 ## The maximum size value in pixels that the font will grow to.
 export(int, 1, 1024, 1) var _max_size = 64 setget _set_max_size
 func _set_max_size(value) -> void:
@@ -24,29 +23,21 @@ func _set_lock_size_in_editor(value) -> void:
 	_lock_size_in_editor = value
 	if value == false:
 		call_deferred("_check_line_count")
-## Set this to true if you want to debug the steps happening in the class. The calls are commented so you need to decomment them.
-export(bool) var _print_debug_enabled = false
-#endregion
 
-#region --Internal variables--
 var _current_font_size: int
 var _last_size_state = LABEL_SIZE_STATE.IDLE
 var _size_just_modified_by_autosizer: bool = false
 var _label_settings_just_duplicated: bool = false
-var _set_defaults: bool = false
+var _editor_defaults_set: bool = false
 var _autosize_manager
 
 enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
-#endregion
 
 
-#region --Signal funcs--
 ## Gets called in-editor and in-game. Sets some default values if necessary.
 func _ready() -> void:
-	if !_set_defaults:
+	if !_editor_defaults_set:
 		set_editor_defaults()
-#	else:
-#		_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 	if Engine.is_editor_hint():
 		call_deferred("_connect_signals")
 	_autosize_manager = get_node("/root/LabelFontAutoSizeManager")
@@ -57,7 +48,6 @@ func _ready() -> void:
 ## Checks if the change was made by the script of by the user and if not, sets the base font size value.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_THEME_CHANGED:
-		#_print_debug_message(str(name) + "' Font resource changed.")
 		if _size_just_modified_by_autosizer:
 			_size_just_modified_by_autosizer = false ## Early return because the change wasn't made by the user.
 		else:
@@ -66,7 +56,7 @@ func _notification(what: int) -> void:
 
 ## Gets called whenever the size of the control rect is modified (in editor). Calls the line count check.
 func _on_label_rect_resized() -> void:
-	if !_set_defaults:
+	if !_editor_defaults_set:
 		return
 	call_deferred("_check_line_count")
 
@@ -80,9 +70,8 @@ func _on_locale_changed() -> void:
 ## Gets called on scene changes and when the label is freed and erases itself from the autosize manager.
 func _exit_tree() -> void:
 	_autosize_manager.erase_label(self)
-#endregion
 
-#region --Private funcs--
+
 ##Only in-editor, keeps stuff in check while manually changing font resources and resizing the label.
 func _connect_signals() -> void:
 	if !is_connected("resized", self, "_on_label_rect_resized"):
@@ -114,14 +103,13 @@ func _check_font_size() -> void:
 	else:
 		var font = self.get_font("normal_font", "RichTextLabel")
 		_current_font_size = font.size
-	#_print_debug_message(str(name) + " Base font size: " + str(_base_font_size) + "px.")
 
 
 ## Makes variables persistent without exposing them in the editor.
 ## Will get removed in Godot 4.3 with the upcoming @export_storage annotation.
 func _get_property_list():
 	var properties: Array = []
-	var bool_properties: Array = ["_size_just_modified_by_autosizer","_set_defaults"]
+	var bool_properties: Array = ["_size_just_modified_by_autosizer","_editor_defaults_set"]
 	for name in bool_properties:
 		properties.append({
 			"name": name,
@@ -143,7 +131,7 @@ func _get_property_list():
 func _check_line_count() -> void:
 	if Engine.is_editor_hint() and _lock_size_in_editor:
 		return
-#	_print_debug_message("Checking lines of " + str(name))
+	
 	if _current_font_size > _max_size and _current_font_size > _min_size:
 		_shrink_font()
 		return
@@ -164,12 +152,9 @@ func _check_line_count() -> void:
 
 ## Makes the font size smaller. Rechecks or stops the cycle depending on the conditions.
 func _shrink_font():
-#	_print_debug_message(str(name) + "' shrink method called")
 	_apply_font_size(_current_font_size - 1)
-#	_print_debug_message(str(name) + " shrunk " + str(_size_per_step) + "px.")
 	if _last_size_state == LABEL_SIZE_STATE.JUST_ENLARGED: ## To stop infinite cycles.
 		_last_size_state = LABEL_SIZE_STATE.IDLE
-#		_print_debug_message(str(name) + " finished shrinking. Was just enlarged.")
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_SHRUNK
 		call_deferred("_check_line_count")
@@ -177,14 +162,12 @@ func _shrink_font():
 
 ## Makes the font size larger. Rechecks/Shrinks/stops the cycle depending on the conditions.
 func _enlarge_font():
-#	_print_debug_message(str(name) + "' enlarge method called")
 	_apply_font_size(_current_font_size + 1)
 	if _last_size_state == LABEL_SIZE_STATE.JUST_SHRUNK:
 		if  get_content_height() > rect_size.y:
 			_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
 			_shrink_font()
 		else: ## To stop infinite cycles.
-#			_print_debug_message(str(name) + " finished enlarging. Was just shrunk.")
 			_last_size_state = LABEL_SIZE_STATE.IDLE
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
@@ -200,18 +183,9 @@ func _apply_font_size(new_size: int) -> void:
 	_current_font_size = new_size
 
 
-
-## Prints message on console, for debugging was used while developing. You can decomment all the calls to debug.
-func _print_debug_message(message: String) -> void:
-	if _print_debug_enabled:
-		print(message)
-#endregion
-
-
-#region --Public funcs--
 ## Gets called in-editor and sets the default values.
 func set_editor_defaults() -> void:
-	_set_defaults =  true
+	_editor_defaults_set =  true
 	fit_content_height = false
 	scroll_active = false
 	rect_clip_content = false
@@ -231,5 +205,4 @@ func set_text(new_text: String) -> void:
 func set_bbcode(new_text: String) -> void:
 	bbcode_text = new_text
 	call_deferred("_check_line_count")
-#endregion
 

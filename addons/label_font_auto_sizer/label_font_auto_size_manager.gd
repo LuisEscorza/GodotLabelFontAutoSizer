@@ -18,3 +18,4 @@ func erase_label(label: Control) -> void:
 func locale_chaged() -> void:
 	for label in _active_labels:
 		label._on_locale_changed()
+

@@ -1,7 +1,6 @@
 tool
 extends EditorPlugin
-signal set_root_completed
-signal check_root_completed
+
 
 var _current_root: Node
 
