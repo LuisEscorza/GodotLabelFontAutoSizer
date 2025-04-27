@@ -1,7 +1,6 @@
 @tool
 @icon ("res://addons/label_font_auto_sizer/icon.svg")
 extends RichTextLabel
-class_name RichLabelAutoSizer
 
 #region External variables
 ## The maximum size value in pixels that the font will grow to.
