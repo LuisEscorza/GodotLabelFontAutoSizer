@@ -23,7 +23,7 @@
 #### *Disclaimer: Text with different font sizes when not intended usually look bad, so I'd advise using this addon pretty much as a last resort. Before using this addon you should probably try adding more space for your text, using abbreviated words, or adding a scrol bar.*
 
 ## Installation
-- If you're using Godot 4.0 or 4.1 read the last paragraph [here](https://github.com/LuisEscorza/GodotLabelFontAutoSizer/releases/tag/v1.0.0_godot_4.2). This addon works with Godot 4.2 onwards.
+- If you're using Godot 4.0 or 4.1 read the last paragraph [here](https://github.com/LuisEscorza/GodotLabelFontAutoSizer/releases/tag/v1.0.0_godot_4.2). This addon works with Godot 4.2 onwards (or 3.5 onwards if you're on Godot 3).
 - Download the latest [release](https://github.com/LuisEscorza/GodotLabelFontAutoSizer/releases) for your Godot engine version and drop the contents inside the root folder of your project or download and import the addon from the [Asset Library](https://godotengine.org/asset-library/).
 - Go to `Project` -> `Project Settings` -> `Plugins` and enable LabelFontAutoSizer.
 
