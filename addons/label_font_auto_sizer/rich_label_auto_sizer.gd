@@ -1,7 +1,6 @@
 @tool
 @icon ("res://addons/label_font_auto_sizer/icon.svg")
 extends RichTextLabel
-class_name RichLabelAutoSizer
 
 #region External variables
 ## The maximum size value in pixels that the font will grow to.
@@ -12,7 +11,7 @@ class_name RichLabelAutoSizer
 		else:
 			_max_size = _min_size
 		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, even before it's ready. This if check prevents it.
-			call_deferred(_check_line_count.get_method())
+			_check_line_count.call_deferred()
 ## The minimum size value in pixels that the font will shrink to.
 @export_range(1, 192, 1, "or_greater", "suffix:px") var _min_size: int = 1:
 	set(value):
@@ -21,12 +20,12 @@ class_name RichLabelAutoSizer
 		else:
 			_min_size = _max_size
 		if is_node_ready(): ## Same as _max_size comment.
-			call_deferred(_check_line_count.get_method())
+			_check_line_count.call_deferred()
 @export var _lock_size_in_editor: bool =  false:
 	set(value):
 		_lock_size_in_editor = value
 		if value == false:
-			call_deferred(_check_line_count.get_method())
+			_check_line_count.call_deferred()
 #endregion
 
 #region Internal variables
@@ -43,11 +42,11 @@ enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED}
 ## Gets called in-editor and in-game. Sets some default values if necessary.
 func _ready() -> void:
 	if !_editor_defaults_set:
-		call_deferred(_set_editor_defaults.get_method())
+		_set_editor_defaults.call_deferred()
 	if Engine.is_editor_hint():
-		call_deferred(_connect_signals.get_method())
+		_connect_signals.call_deferred()
 	else:
-		call_deferred(_check_line_count.get_method())
+		_check_line_count.call_deferred()
 	LabelFontAutoSizeManager.register_label(self)
 
 
@@ -64,13 +63,13 @@ func _on_font_resource_changed() -> void:
 func _on_label_rect_resized() -> void:
 	if !_editor_defaults_set:
 		return
-	call_deferred(_check_line_count.get_method())
+	_check_line_count.call_deferred()
 
 
 ## Called by autosize manager whenever the locale_chaged() method is called, as the tr() object changes don't trigger
 ## the set_text() method of the label, thus the size and line_amount doesn't get checked.
 func _on_locale_changed() -> void:
-	call_deferred(_check_line_count.get_method())
+	_check_line_count.call_deferred()
 
 
 ## Gets called on scene changes and when the label is freed and erases itself from the autosize manager.
@@ -95,7 +94,7 @@ func _set(property: StringName, value: Variant) -> bool:
 	match property:
 		"text":
 			text = value
-			call_deferred(_check_line_count.get_method())
+			_check_line_count.call_deferred()
 			return true
 		_:
 			return false
@@ -141,7 +140,7 @@ func _shrink_font():
 		_last_size_state = LABEL_SIZE_STATE.IDLE
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_SHRUNK
-		call_deferred(_check_line_count.get_method())
+		_check_line_count.call_deferred()
 
 
 ## Makes the font size larger. Rechecks/Shrinks/stops the cycle depending on the conditions.
@@ -155,7 +154,7 @@ func _enlarge_font():
 			_last_size_state = LABEL_SIZE_STATE.IDLE
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
-		call_deferred(_check_line_count.get_method())
+		_check_line_count.call_deferred()
 
 
 ## Applies the new font size.
@@ -184,6 +183,6 @@ func _set_editor_defaults() -> void:
 ##In a real scenario you wouldn't be changing the text from within the class itself though.**
 func set_text(new_text: String) -> void:
 	text = new_text
-	call_deferred(_check_line_count.get_method())
+	_check_line_count.call_deferred()
 #endregion
 
