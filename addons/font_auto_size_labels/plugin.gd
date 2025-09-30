@@ -12,4 +12,3 @@ func _exit_tree():
 	remove_custom_type("AutoSizeLabel")
 	remove_custom_type("AutoSizeRichTextLabel")
 #endregion
-
