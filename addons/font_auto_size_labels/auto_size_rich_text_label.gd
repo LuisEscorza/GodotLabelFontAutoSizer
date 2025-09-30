@@ -44,11 +44,10 @@ enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED}
 func _ready() -> void:
 	if !_editor_defaults_set:
 		_set_editor_defaults.call_deferred()
-	if Engine.is_editor_hint():
-		_connect_signals.call_deferred()
 	else:
 		_check_line_count.call_deferred()
 	AutoSizeLabelManager.register_label(self)
+	_connect_signals.call_deferred()
 
 
 ## Gets called when there are changes in either the Theme or Label Settings resources.
@@ -186,4 +185,3 @@ func set_text(new_text: String) -> void:
 	text = new_text
 	_check_line_count.call_deferred()
 #endregion
-
