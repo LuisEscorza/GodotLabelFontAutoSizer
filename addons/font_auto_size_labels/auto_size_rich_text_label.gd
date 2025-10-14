@@ -1,5 +1,5 @@
 @tool
-@icon ("res://addons/label_font_auto_sizer/icon.svg")
+@icon ("res://addons/font_auto_size_labels/icon.svg")
 extends RichTextLabel
 class_name AutoSizeRichTextLabel
 
