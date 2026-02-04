@@ -1,5 +1,5 @@
 @tool
-@icon ("res://addons/font_auto_size_labels/icon.svg")
+@icon("res://addons/font_auto_size_labels/icon.svg")
 extends Label
 class_name AutoSizeLabel
 
@@ -7,12 +7,13 @@ class_name AutoSizeLabel
 ## The maximum size value in pixels that the font will grow to.
 @export_range(1, 192, 1, "or_greater", "suffix:px") var _max_size: int = 64:
 	set(value):
-		if value >_min_size:
+		if value > _min_size:
 			_max_size = value
 		else:
 			_max_size = _min_size
 		if is_node_ready(): ## This setter gets called when the label enters the tree in the editor, even before it's ready. This if check prevents it.
 			_check_line_count.call_deferred()
+
 ## The minimum size value in pixels that the font will shrink to.
 @export_range(1, 192, 1, "or_greater", "suffix:px") var _min_size: int = 1:
 	set(value):
@@ -22,7 +23,8 @@ class_name AutoSizeLabel
 			_min_size = _max_size
 		if is_node_ready(): ## Same as _max_size comment.
 			_check_line_count.call_deferred()
-@export var _lock_size_in_editor: bool =  false:
+
+@export var _lock_size_in_editor: bool = false:
 	set(value):
 		_lock_size_in_editor = value
 		if value == false:
@@ -35,7 +37,7 @@ class_name AutoSizeLabel
 @export_storage var _size_just_modified_by_autosizer: bool = false
 @export_storage var _editor_defaults_set: bool = false
 var _label_settings_just_duplicated: bool = false
-enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED} 
+enum LABEL_SIZE_STATE {JUST_SHRUNK, IDLE, JUST_ENLARGED}
 #endregion
 
 
@@ -57,7 +59,6 @@ func _on_font_resource_changed() -> void:
 		_size_just_modified_by_autosizer = false ## Early return because the change wasn't made by the user.
 	else:
 		_apply_font_size(_current_font_size)
-
 
 
 ## Gets called whenever the size of the control rect is modified (in editor). Calls the line count check.
@@ -105,7 +106,7 @@ func _set(property: StringName, value: Variant) -> bool:
 			if _label_settings_just_duplicated: ## Need to check because this gets called whenever we duplicate the resource as well.
 				_label_settings_just_duplicated = false
 				return true
-			else: 
+			else:
 				if value != null:
 					label_settings = value
 					_label_settings_just_duplicated = true
@@ -141,7 +142,7 @@ func _check_line_count() -> void:
 	if _current_font_size > _max_size and _current_font_size > _min_size:
 		_shrink_font()
 		return
-	elif  get_line_count() > get_visible_line_count() and _current_font_size > _min_size:
+	elif get_line_count() > get_visible_line_count() and _current_font_size > _min_size:
 		_shrink_font()
 		return
 	
@@ -168,7 +169,7 @@ func _shrink_font():
 func _enlarge_font():
 	_apply_font_size(_current_font_size + 1)
 	if _last_size_state == LABEL_SIZE_STATE.JUST_SHRUNK:
-		if  get_line_count() > get_visible_line_count():
+		if get_line_count() > get_visible_line_count():
 			_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
 			_shrink_font()
 		else: ## To stop infinite cycles.
@@ -192,7 +193,7 @@ func _apply_font_size(new_size: int) -> void:
 #region Public functions
 ## Gets called in-editor and sets the default values.
 func _set_editor_defaults() -> void:
-	_editor_defaults_set =  true
+	_editor_defaults_set = true
 	clip_text = true
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	if label_settings != null:
