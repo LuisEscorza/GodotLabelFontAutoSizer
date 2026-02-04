@@ -29,6 +29,13 @@ class_name AutoSizeRichTextLabel
 		_lock_size_in_editor = value
 		if value == false:
 			_check_line_count.call_deferred()
+
+## Ratio of the outline size to font size.
+@export_range(0, 1, 0.02, "or_greater") var _outline_ratio: float = 0.2:
+	set(value):
+		_outline_ratio = value
+		if is_node_ready():
+			_apply_outline_size.call_deferred()
 #endregion
 
 #region Internal variables
@@ -157,6 +164,14 @@ func _enlarge_font():
 	else:
 		_last_size_state = LABEL_SIZE_STATE.JUST_ENLARGED
 		_check_line_count.call_deferred()
+	
+	if is_zero_approx(_outline_ratio) : return
+	_apply_outline_size()
+
+## Applies the outline size based on the ratio.
+func _apply_outline_size() -> void:
+	_size_just_modified_by_autosizer = true ## avoids infinite loops due to _on_font_resource_changed() getting called.
+	set("theme_override_constants/outline_size", roundi(_current_font_size * _outline_ratio))
 
 
 ## Applies the new font size.
