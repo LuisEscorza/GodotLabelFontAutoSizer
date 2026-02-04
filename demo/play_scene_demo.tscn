@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cqk1bel28xqov"]
+[gd_scene format=3 uid="uid://cqk1bel28xqov"]
 
 [ext_resource type="FontFile" uid="uid://cxqub0sfewm4v" path="res://demo/Anta-Regular.ttf" id="1_wd48m"]
 [ext_resource type="Theme" uid="uid://cifdhwluyikjx" path="res://demo/demo_label_theme.tres" id="2_x0fsq"]
@@ -50,7 +50,7 @@ shadow_size = 6
 shadow_offset = Vector2(5, 5)
 anti_aliasing = false
 
-[node name="PlaySceneDemo" type="Control"]
+[node name="PlaySceneDemo" type="Control" unique_id=1282281286]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,7 +59,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="BKG2" type="ColorRect" parent="."]
+[node name="BKG2" type="ColorRect" parent="." unique_id=357119501]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,7 +69,7 @@ grow_vertical = 2
 color = Color(0.0588235, 0.0588235, 0.0588235, 1)
 metadata/_edit_lock_ = true
 
-[node name="Enabled" type="Label" parent="."]
+[node name="Enabled" type="Label" parent="." unique_id=1296944707]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 60.0
@@ -81,7 +81,7 @@ text = "Auto Sizer Enabled"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Disabled" type="Label" parent="."]
+[node name="Disabled" type="Label" parent="." unique_id=46776174]
 layout_mode = 0
 offset_left = 674.0
 offset_top = 60.0
@@ -93,7 +93,7 @@ text = "Auto Sizer Disabled"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LabelWithScript" type="Label" parent="."]
+[node name="LabelWithScript" type="Label" parent="." unique_id=1048768007]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -119,7 +119,7 @@ _min_size = 20
 _current_font_size = 36
 _editor_defaults_set = true
 
-[node name="LabelWithScript2" type="Label" parent="."]
+[node name="LabelWithScript2" type="Label" parent="." unique_id=1808214949]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -145,7 +145,7 @@ _min_size = 20
 _current_font_size = 36
 _editor_defaults_set = true
 
-[node name="LabelNoScript" type="Label" parent="."]
+[node name="LabelNoScript" type="Label" parent="." unique_id=221577552]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -165,7 +165,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
-[node name="LabelNoScript2" type="Label" parent="."]
+[node name="LabelNoScript2" type="Label" parent="." unique_id=1504694163]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -185,7 +185,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
-[node name="AddButton" type="Button" parent="." node_paths=PackedStringArray("_labels")]
+[node name="AddButton" type="Button" parent="." unique_id=244363140 node_paths=PackedStringArray("_labels")]
 layout_mode = 0
 offset_left = 310.0
 offset_top = 594.0
@@ -212,7 +212,7 @@ text = "ADD NUMBERS"
 script = ExtResource("4_hu8nr")
 _labels = [NodePath("../LabelNoScript"), NodePath("../LabelWithScript"), NodePath("../LabelWithScript2"), NodePath("../LabelNoScript2")]
 
-[node name="DeleteButton" type="Button" parent="." node_paths=PackedStringArray("_labels")]
+[node name="DeleteButton" type="Button" parent="." unique_id=1293728511 node_paths=PackedStringArray("_labels")]
 layout_mode = 0
 offset_left = 669.0
 offset_top = 594.0

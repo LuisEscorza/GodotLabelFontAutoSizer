@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dm1ajn5egucid"]
+[gd_scene format=3 uid="uid://dm1ajn5egucid"]
 
 [ext_resource type="Theme" uid="uid://cifdhwluyikjx" path="res://demo/demo_label_theme.tres" id="1_5kqak"]
 [ext_resource type="Script" uid="uid://bttgnk3bb2a8i" path="res://addons/font_auto_size_labels/auto_size_label.gd" id="2_gbljs"]
 [ext_resource type="Script" uid="uid://co0lo02vnu10n" path="res://addons/font_auto_size_labels/auto_size_rich_text_label.gd" id="3_h5141"]
 
-[node name="InEditorDemo" type="Control"]
+[node name="InEditorDemo" type="Control" unique_id=286596428]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="BKG" type="ColorRect" parent="."]
+[node name="BKG" type="ColorRect" parent="." unique_id=1120189087]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,7 @@ grow_vertical = 2
 color = Color(0.0605303, 0.0605304, 0.0605303, 1)
 metadata/_edit_lock_ = true
 
-[node name="LabelWithScript" type="Label" parent="."]
+[node name="LabelWithScript" type="Label" parent="." unique_id=1561196119]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -49,7 +49,7 @@ _min_size = 20
 _current_font_size = 40
 _editor_defaults_set = true
 
-[node name="LabelNoScript" type="Label" parent="."]
+[node name="LabelNoScript" type="Label" parent="." unique_id=1681961274]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,7 +70,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1376741413]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
